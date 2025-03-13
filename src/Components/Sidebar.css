@@ -1,0 +1,20 @@
+.logo {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  gap: 30px;
+  margin: 30px 0;
+  height: 20%;
+}
+
+.menu-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.ant-menu-item-selected {
+  background-color: #4f6f52 !important;
+  color: #fff !important;
+}

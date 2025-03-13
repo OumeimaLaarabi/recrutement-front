@@ -1,0 +1,239 @@
+.home {
+  display: flex;
+  background-color: #f5f7fa;
+}
+
+.hero-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* gap: 0px;*/
+  padding-left: 10px; /* Modification de la valeur de padding-left */
+  margin-top: 0%; /* Ajout de la marge supérieure */
+  letter-spacing: 2px;
+}
+
+.hero-left h2 {
+  text-align: left;
+  font-family: "Arial";
+  font-size: 30px;
+  margin-left: 35px;
+  color: #4d4d4d;
+  margin-bottom: 0;
+}
+
+.hero-left h2 span {
+  color: #4caf4f;
+}
+.hero-left h6 {
+  text-align: left;
+  line-height: 1.8rem;
+  font-weight: normal;
+  font-size: 16px;
+  margin-top: 0;
+  margin-left: 35px;
+}
+.start-button {
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  color: white;
+  padding: 0.6rem 2rem;
+  cursor: pointer;
+  margin-left: 35px;
+
+  background-color: #4caf4f;
+  border-radius: 10px;
+  width: 110px;
+  height: 30px;
+  margin-bottom: 30px;
+}
+.Home-right {
+  margin-right: 100px;
+  padding-top: 60px;
+}
+.Home-right img {
+  width: 350px;
+  height: 400px;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.Service-container {
+  text-align: center;
+  margin-bottom: 0;
+}
+.Service-container h1 {
+  margin-bottom: 0; /* Ajout de cette ligne */
+  color: #4d4d4d;
+  font-family: "inter";
+  font-style: oblique;
+}
+.Service-container p {
+  color: #717171;
+  font-family: "inter";
+  font-size: x-small;
+}
+.Service-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.block {
+  width: 150px; /* For three columns per line */
+  height: 60px;
+  margin-bottom: 50px; /* Spacing between lines */
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  margin-right: 100px; /* Space between blocks */
+}
+
+.block img {
+  max-width: 100px;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.block h3 {
+  margin: 0;
+}
+
+/* Remove margin-right from the last block in each row */
+.block:nth-child(3n) {
+  margin-right: 0;
+}
+
+.Community-container {
+  display: flex;
+  flex-direction: column;
+
+  background-color: #f0f0f0;
+  padding: 35px;
+  margin-bottom: 10px;
+}
+
+.Tittle-container {
+  color: #4d4d4d;
+  font-family: "inter";
+  font-style: oblique;
+  margin-bottom: 10px;
+}
+
+.Tittle-container h1 {
+  text-align: center;
+}
+
+.community-row {
+  display: flex;
+  justify-content: space-between; /* Pour aligner les éléments à l'extrême gauche et à l'extrême droite */
+}
+
+.Community-left,
+.Community-right {
+  display: flex;
+  align-items: center; /* Pour aligner les éléments verticalement */
+
+  flex-direction: column;
+}
+
+.Community-left img,
+.Community-right img {
+  margin-right: 10px;
+}
+
+.Community-left h3,
+.Community-right h3 {
+  margin-top: 0;
+}
+
+.Community-left p,
+.Community-right p {
+  margin-top: 0;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+  margin-top: 1px;
+}
+.About {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 80px;
+}
+.about-left {
+  margin-right: 100px;
+  padding-top: 60px;
+}
+.about-left img {
+  width: 450 px;
+  height: 400px;
+}
+.About-right h2 {
+  font-family: "Arial";
+  font-size: 25px;
+  margin-left: 70px;
+  color: #000000;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(124, 122, 122, 0.5);
+}
+.About-right .description {
+  margin-left: 70px;
+}
+
+.About-right .description .description-text {
+  text-align: center;
+
+  font-weight: normal;
+  font-size: 15px;
+  margin-top: 0;
+  margin-left: 250px;
+}
+.Footer {
+  display: flex;
+  justify-content: space-around; /* Align items to the start and end of the container */
+  align-items: center; /* Center items vertically */
+  padding-bottom: 80px;
+  background-color: #4d4d4d;
+}
+
+.footer-left {
+  margin-right: 40px; /* Adjust margin as needed */
+}
+
+.footer-right {
+  display: flex;
+  flex-direction: column; /* Align items in a column */
+}
+
+.footer-right h5 {
+  margin-right: 40px; /* Remove default margin */
+  padding-top: 0px; /* Remove default padding */
+  font-size: large;
+  margin-bottom: 5px;
+  color: #f0f0f0;
+}
+
+.footer-right ul {
+  list-style: none; /* Remove default list styles */
+  padding: 0; /* Remove default padding */
+  margin-left: 40px; /* Remove default margin */
+}
+
+.footer-right ul li {
+  margin-top: 10px;
+  margin-right: 20px; /* Add margin between list items */
+  color: #f0f0f0;
+}
+.footer-right ul li a {
+  color: #f0f0f0;
+}
+
+.footer-right ul li:last-child {
+  margin-right: 0; /* Remove margin from last list item */
+}

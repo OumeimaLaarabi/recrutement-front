@@ -1,0 +1,128 @@
+.navbar-container {
+  background: rgb(255, 255, 255);
+  padding: 0px;
+  margin-top: -40px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-content {
+  max-width: 1300px;
+  display: flex;
+  align-items: right;
+  /* Change to 'flex-end' */
+  justify-content: flex-end;
+  padding: 0;
+  margin: 0;
+}
+
+.logo-container {
+  width: 150px; /* Adjust as needed */
+  height: 150px; /* Adjust as needed */
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  /* Remove margin-left */
+  /* Use margin-right: auto for flexbox positioning */
+  margin-right: auto;
+}
+
+.logoNavbar {
+  width: 130px;
+  height: auto;
+  margin-top: 15px;
+}
+
+.logo-container.active {
+  background-color: white; /* Change the color as desired */
+}
+
+.nav-content ul {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.nav-content li {
+  margin: 0 1.5rem;
+}
+
+.menu-item {
+  text-align: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000;
+  position: relative;
+  cursor: pointer;
+}
+
+.menu-item::before {
+  content: "";
+  width: 2rem;
+  height: 0.2rem;
+  background: linear-gradient(90deg, #4caf4f 0%, #edeeed 100%);
+  border-radius: 0.5rem;
+  position: absolute;
+  bottom: -0.6rem;
+  opacity: 0;
+  transform: translateX(-1.5rem);
+  transition: all 0.3s ease;
+}
+
+.menu-item:hover::before {
+  width: 100%;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.register-button {
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4caf4f;
+  padding: 0.6rem 2rem;
+  cursor: pointer;
+}
+
+.user-dropdown {
+  position: relative;
+}
+
+.user-dropdown .dropdown-list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+  border-radius: 4px;
+  min-width: 120px;
+}
+
+.user-dropdown:hover .dropdown-list {
+  display: block; /* Changed from 'flex' */
+}
+
+.dropdown-list li {
+  list-style: none;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 8px 16px;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}

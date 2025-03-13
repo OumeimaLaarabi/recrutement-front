@@ -1,0 +1,88 @@
+.register-form {
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 20px;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+}
+
+.register-form h2 {
+  text-align: center;
+  font-family: "Inika";
+}
+
+.input-gr {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.input-gr input {
+  width: 90%;
+  padding: 10px 10px 10px 10px; /* Adjust left padding to accommodate image */
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+}
+.input-gr input:focus {
+  outline: none;
+}
+
+.submit-button-reg {
+  width: 70%;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #4caf4f;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-left: 55px;
+  margin-top: 20px;
+}
+
+.container {
+  display: "flex";
+  text-align: center;
+  margin-top: 20px;
+  font-family: "Inter";
+}
+
+.text {
+  margin: 0 20px;
+  margin-top: 30px;
+  font-family: DM Sans;
+  color: #717171;
+}
+
+.sign-up-Button {
+  width: 70%;
+  padding: 10px;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 15px;
+  color: #4caf4f;
+  border: 2px solid #4caf4f;
+  cursor: pointer;
+  margin-left: 90px;
+  margin-top: 30px;
+}
+
+.toggle-iconn {
+  position: absolute;
+  right: 25px;
+  top: 65%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: auto;
+  cursor: pointer;
+}
+
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.input-gr.half {
+  width: 48%; /* Adjust the width as necessary */
+}
