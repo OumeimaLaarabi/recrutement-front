@@ -28,9 +28,9 @@ const Sidebar = ({ collapsed }) => {
         inlineCollapsed={collapsed}
       >
         <Menu.Item key="1" icon={<UserOutlined />}>
-          {user.role === "recruteur" ? (
+          {user.role == "recruteur" ? (
             <Link to="/HomeRecruiter">Dashboard</Link>
-          ) : user.role === "candidat" ? (
+          ) : user.role == "candidat" ? (
             <Link to="/HomeTalent">Dashboard</Link>
           ) : (
             <Link to="/HomeAdmin">Dashboard</Link>
@@ -38,9 +38,9 @@ const Sidebar = ({ collapsed }) => {
         </Menu.Item>
 
         <Menu.Item key="2" icon={<OrderedListOutlined />}>
-          {user.role === "recruteur" ? (
+          {user.role == "recruteur" ? (
             <Link to="/RecruiterApplications">Applications</Link>
-          ) : user.role === 0 ? (
+          ) : user.role == 0 ? (
             <Link to="/RecruiterList">Recruiters</Link>
           ) : (
             <Link to="/TalentApplication">My Applications</Link>
@@ -48,21 +48,21 @@ const Sidebar = ({ collapsed }) => {
         </Menu.Item>
 
         <Menu.Item key="3" icon={<ProfileOutlined />}>
-          {user.role === "recruteur" ? (
+          {user.role == "recruteur" ? (
             <Link to="/RecruiterProfile">Profile</Link>
-          ) : user.role === 0 ? (
+          ) : user.role == 0 ? (
             <Link to="/TalentList">Talents</Link>
           ) : (
             <Link to="/ProfileTalent">Profile</Link>
           )}
         </Menu.Item>
 
-        <Menu.Item key="5" icon={<BiBookAlt />}>
+       {/*<Menu.Item key="5" icon={<BiBookAlt />}>
         <Link to="/offres/new">Créer une offre</Link>
         </Menu.Item>
 <Menu.Item key="6" icon={<BiBookAlt />}>
   <Link to="/offres" onClick={() => navigate("/offres")}>Offres</Link>
-</Menu.Item>
+</Menu.Item>*/} 
 
 <Menu.Item key="4" icon={<LogoutOutlined />} disabled={loading}>
   <span onClick={loading ? null : handleLogout} style={{ cursor: loading ? "default" : "pointer" }}>

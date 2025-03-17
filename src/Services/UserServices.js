@@ -24,7 +24,13 @@ export const registerCandidate = async (prenom,nom , email, password, adresse, t
       adresse,
       telephone
     });
-    return response.data;
+    // Check if the response is successful and contains user data
+    if (response.status === 200 && response.data.user) {
+      // Store the user data in localStorage
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+    }
+
+    return response.data;  // Return the response data
   } catch (error) {
     console.error("Failed to register candidate:", error);
     throw error;
@@ -60,7 +66,12 @@ export const registerRecruiter = async (firstName, lastName, email, password, en
       entrepriseSecteur: entreprise.secteur,
     });
 
-    return response.data;
+    if (response.status === 200 && response.data.user) {
+      // Store the user data in localStorage
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+    }
+
+    return response.data;  // Return the response data
   } catch (error) {
     console.error("Erreur lors de l'enregistrement du recruteur :", error.response?.data || error.message);
     throw new Error(error.response?.data?.message || "Erreur lors de l'enregistrement. Veuillez réessayer.");

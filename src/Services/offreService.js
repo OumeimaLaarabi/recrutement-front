@@ -54,35 +54,22 @@ export const updateOffre = async (id, offreData) => {
     throw error.response?.data?.message || "Erreur de connexion au serveur";
   }
 };
-// ✅ Mettre à jour une offre (seulement pour Recruteur/Admin)
-/*export const updateOffre = async (id, updatedData) => {
+export const getOffresbyRecruiter = async (id) => {
   try {
-    const response = await axios.put(`${apiUrl}/${id}`, updatedData, getAuthConfig());
+    const response = await axios.get(`${apiUrl}/recruteur/${id}`);
     return response.data;
   } catch (error) {
-    console.error('Erreur lors de la mise à jour de l\'offre:', error.response?.data || error.message);
-    throw error;
+    console.error("Failed to fetch offers:", error);
+    throw error.response?.data?.message || "Erreur de connexion au serveur";
   }
-};*/
+};
+export const applyOffre = async (candidatId, offreId, cv) => {
+  try {
+    const response = await axios.post(apiUrl, { candidatId, offreId, cv });
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la soumission de la candidature:", error);
+    throw error.response?.data?.message || "Erreur de connexion au serveur";
+  }
+};
 
-// ✅ Supprimer une offre (seulement pour Recruteur/Admin)
-/*export const deleteOffre = async (id) => {
-  try {
-    const response = await axios.delete(`${apiUrl}/${id}`, getAuthConfig());
-    return response.data;
-  } catch (error) {
-    console.error('Erreur lors de la suppression de l\'offre:', error.response?.data || error.message);
-    throw error;
-  }
-};*/
-
-// ✅ Récupérer les candidatures pour une offre
-/*export const getCandidaturesForOffre = async (id) => {
-  try {
-    const response = await axios.get(`${API_URL}/${id}/candidatures`, getAuthConfig());
-    return response.data;
-  } catch (error) {
-    console.error('Erreur lors de la récupération des candidatures:', error.response?.data || error.message);
-    throw error;
-  }
-};*/

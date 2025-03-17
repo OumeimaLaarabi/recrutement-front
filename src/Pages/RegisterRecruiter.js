@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./RegisterTalent.css";
-import { registerRecruiter  } from "../Services/UserServices";
+import { registerRecruiter } from "../Services/UserServices";
 import { useUserContext } from "../Contexts/AuthContext";
 import { decodeToken } from "../Utils/TokenUtils";
 
@@ -43,14 +43,15 @@ const RegisterRecruiter = () => {
     }
     return true;
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage({ type: "", text: "" });
-  
+
     if (!validateForm()) {
       return;
     }
-  
+ 
     try {
       const response = await registerRecruiter(
         formData.firstName,
@@ -69,7 +70,7 @@ const RegisterRecruiter = () => {
       console.log("Réponse du backend:", response);
   
       const userInfo = decodeToken(response.token);
-      console.log(userInfo); // Vérifie la structure du token
+      console.log(userInfo);
       
       // Mets à jour le contexte avec les données de l'utilisateur
       setUser(userInfo);
@@ -88,7 +89,6 @@ const RegisterRecruiter = () => {
       });
     }
   };
-  
   const inputFields = [
     { label: "Prénom", name: "firstName" },
     { label: "Nom", name: "lastName" },

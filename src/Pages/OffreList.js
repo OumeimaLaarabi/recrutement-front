@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getAllOffres, deleteOffre } from "../Services/offreService";
 import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
+import { Link } from "react-router-dom";
 
 const OffreList = () => {
   const [Jobs, setJobs] = useState([]);
@@ -34,7 +35,10 @@ const OffreList = () => {
   };
 
   const handleUpdate = (id) => {
-    navigate(`/offres/edit/${id}`); // Update the navigate path to match your defined route
+    console.log("ID de l'offre sélectionnée :", id);
+    navigate(`/offres/edit/${id}`);
+
+//navigate(`/offres/edit/${id}`); // Update the navigate path to match your defined route
   };
 
   return (
@@ -49,9 +53,12 @@ const OffreList = () => {
         <div className="job-list">
           {Jobs.map((job) => (
             <div key={job._id} className="job-item">
-              <h2>{job.title}</h2>
+              <h2>
+                <Link to={`/offres/details/${job._id}`}>{job.title}</Link>
+              </h2>
               <p>{job.description}</p>
-              <button onClick={() => handleUpdate(job._id)}>Modifier</button> {/* Button to navigate to the update page */}
+              <button onClick={() => handleUpdate(job._id)}>Modifier</button>{" "}
+              {/* Button to navigate to the update page */}
               <button onClick={() => handleDelete(job._id)}>Supprimer</button>
             </div>
           ))}

@@ -40,7 +40,7 @@ function App() {
         navigate("/HomeTalent");
       }
     }
-  }, [user, navigate]);
+  }, [user]);
 
   return (
     <div className={user ? "dashboard" : ""}>

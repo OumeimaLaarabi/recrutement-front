@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
     try {
       localStorage.removeItem("token"); // Suppression du token
       setUser(null);
-      navigate("/");
+      navigate("/login");
     } finally {
       setLoading(false);
     }
