@@ -83,7 +83,7 @@ const TalentOfferList = () => {
             <FontAwesomeIcon
               icon={faSearch}
               className="search-icon"
-              style={{ color: isFocused ? "#4caf50" : "#ccc" }}
+              style={{ color: isFocused ? "#4caf54" : "#ccc" }}
             />
             <input
               type="text"
