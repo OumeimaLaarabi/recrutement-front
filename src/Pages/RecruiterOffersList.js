@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getOffresbyRecruiter, deleteOffre } from "../Services/offreService";
+import { getOffresbyRecruiter, deleteOffre } from "../Services/OffreService";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { formatDate } from "../Utils/dateUtils";

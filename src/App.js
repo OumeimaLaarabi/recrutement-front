@@ -21,7 +21,8 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import CreateOffre from "./Pages/CreateOffre";
 import OffreList from "./Pages/OffreList";
 import UpdateOffre from "./Pages/UpdateOffre"; // Import your update page
-
+import ApplyPage from "./Pages/ApplyPage"; 
+import OfferDetails from "./Pages/OffreDetails";
 const { Sider, Content } = Layout;
 
 function App() {
@@ -73,8 +74,10 @@ function App() {
                 <Route path="/offres" element={<OffreList />} />
                 <Route path="/deleteoffre/:id" element={<OffreList />} />
                 <Route path="/offres/edit/:id" element={<UpdateOffre />} />
+                <Route path="/apply/:id" element={<ApplyPage />} />
 
-                
+                <Route path="/OfferDetails/:id" element={<OfferDetails />} />
+
               </Routes>
             </Content>
           </Layout>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createOffre } from "../Services/offreService"; 
+import { createOffre } from "../Services/OffreService"; 
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../Contexts/AuthContext";
 

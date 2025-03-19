@@ -26,15 +26,16 @@ export const getAllOffres = async () => {
 
 
  //✅ Récupérer une offre par ID
-export const getOffreById = async (id) => {
+ export const getOfferById = async (id) => {
   try {
-    const response = await axios.get(`${apiUrl}/${id}`);
+    const response = await axios.get(`${apiUrl}/${id}`); 
     return response.data;
   } catch (error) {
     console.error('Erreur lors de la récupération de l\'offre:', error.response?.data || error.message);
-    throw error;
+    throw error.response?.data?.message || "Erreur de connexion au serveur";
   }
 };
+
 export const deleteOffre = async (id) => {
   try {
     const response = await axios.delete(`${apiUrl}/${id}`);
@@ -65,7 +66,7 @@ export const getOffresbyRecruiter = async (id) => {
 };
 export const applyOffre = async (candidatId, offreId, cv) => {
   try {
-    const response = await axios.post(apiUrl, { candidatId, offreId, cv });
+    const response = await axios.post(`${apiUrl}/apply`, { candidatId, offreId, cv });
     return response.data;
   } catch (error) {
     console.error("Erreur lors de la soumission de la candidature:", error);

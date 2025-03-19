@@ -12,6 +12,16 @@ export const getAllRecruiters = async () => {
     throw error.response?.data?.message || "Erreur de connexion au serveur";
   }
 };
+export const getRecruiterById = async (id) => {
+  try {
+    const response = await axios.get(`${apiUrl}/recruteur/${id}`);
+    return response.data; // Return recruiter data
+  } catch (error) {
+      console.error("Error fetching recruiter:", error);
+      throw error.response?.data?.message ; // Throw error for handling in the component
+  }
+};
+
 export const updateRecruiter = async (id, recruiterData) => {
   try {
     const response = await axios.put(`${apiUrl}/${id}`, recruiterData);

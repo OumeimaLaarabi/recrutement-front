@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate for redirect
-import { getOffreById, updateOffre } from "../Services/offreService"; // Import service methods
+import { getOfferById, updateOffre } from "../Services/OffreService" // Import service methods
 import { FaArrowLeft } from "react-icons/fa"; // Import the back arrow icon
 import "./Updateoffre.css";
 const UpdateOffre = () => {
@@ -15,7 +15,7 @@ const UpdateOffre = () => {
   useEffect(() => {
     const fetchOffre = async () => {
       try {
-        const data = await getOffreById(id);
+        const data = await getOfferById(id);
         setOffre(data); // Set the fetched offer data
         setLoading(false);
       } catch (err) {

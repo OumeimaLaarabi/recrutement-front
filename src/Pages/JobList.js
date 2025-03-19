@@ -73,7 +73,7 @@ function JobList() {
               </div>
               <div className="offer-actions">
                 <Link
-                  to={`/offerDetails/${offer.id}`}
+                  to={`/offerDetails/${offer._id}`}
                   style={{ textDecoration: "none", color: "green" }}
                 >
                   <FontAwesomeIcon icon={faPaperPlane} />

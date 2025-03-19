@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllOffres, deleteOffre } from "../Services/offreService";
+import { getAllOffres, deleteOffre } from "../Services/OffreService";
 import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
 import { Link } from "react-router-dom";
 
