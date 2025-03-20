@@ -1,166 +1,154 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getOfferById,applyOffre } from "../Services/OffreService";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getOfferById, applyOffre } from "../Services/OffreService";
 import { getRecruiterById } from "../Services/RecruiterServices";
-import { MailOutlined, PhoneOutlined, TeamOutlined, HomeOutlined } from '@ant-design/icons';
-import Toast from "../Components/Toast"; 
+import { MailOutlined, PhoneOutlined, TeamOutlined, HomeOutlined } from "@ant-design/icons";
+import Toast from "../Components/Toast";
 import { useUserContext } from "../Contexts/AuthContext";
+import "./OfferDetails.css";
 
 const OfferDetails = () => {
-  const { id } = useParams();
-  const { user } = useUserContext();
-  const navigate = useNavigate();
+    const { id } = useParams();
+    const { user } = useUserContext();
+    const navigate = useNavigate();
 
-  const [offerDetails, setOfferDetails] = useState(null);
-  const [recruiterDetails, setRecruiterDetails] = useState(null);
-  const [error, setError] = useState("");
-  const [applicationStatus, setApplicationStatus] = useState("");
-  const [showToast, setShowToast] = useState(false);
-  const [toastType, setToastType] = useState("");
+    const [offerDetails, setOfferDetails] = useState(null);
+    const [recruiterDetails, setRecruiterDetails] = useState(null);
+    const [error, setError] = useState("");
+    const [applicationStatus, setApplicationStatus] = useState("");
+    const [showToast, setShowToast] = useState(false);
+    const [toastType, setToastType] = useState("");
 
-  // Function to fetch the offer by ID
-  const fetchOfferById = async () => {
-    try {
-      const data = await getOfferById(id);
-      console.log("Offer data:", data);
-      setOfferDetails(data);
-      // Trigger recruiter fetch after fetching the offer
-      fetchRecruiterById(data.id_recruteur);
-    } catch (error) {
-      console.error("Error fetching offer:", error);
-      setError(`Failed to fetch offer details: ${error?.message || "Unknown error"}`);
-    }
-  };
+    useEffect(() => {
+        const fetchOfferById = async () => {
+            try {
+                const offerData = await getOfferById(id);
+                setOfferDetails(offerData);
 
-  // Function to fetch the recruiter by ID separately
-  const fetchRecruiterById = async (recruiterId) => {
-    try {
-      if (recruiterId && recruiterId._id) {
-        const recruiterData = await getRecruiterById(recruiterId._id);
-        console.log("Recruiter data:", recruiterData);
-        setRecruiterDetails(recruiterData);
-      } else {
-        setError("Recruiter ID is missing or invalid.");
-      }
-    } catch (error) {
-      console.error("Error fetching recruiter:", error);
-      setError(`Failed to fetch recruiter details: ${error?.message || "Unknown error"}`);
-    }
-  };
+                if (offerData.id_recruteur) {
+                    const recruiterId = typeof offerData.id_recruteur === "object" ? offerData.id_recruteur._id : offerData.id_recruteur;
+                    if (recruiterId) {
+                        const recruiterData = await getRecruiterById(recruiterId);
+                        setRecruiterDetails(recruiterData);
+                    } else {
+                        setError("Recruiter information not available");
+                    }
+                } else {
+                    setError("Recruiter information not available");
+                }
+            } catch (error) {
+                console.error("Error fetching offer or recruiter:", error);
+                setError(`Failed to fetch details: ${error.message}`);
+            }
+        };
 
-  useEffect(() => {
-    fetchOfferById();
-  }, [id]);
+        fetchOfferById();
+    }, [id]);
 
-  if (error) {
-    return <p className="error-messages">{error}</p>;
-  }
+    if (error) return <p className="error-messages">{error}</p>;
+    if (!offerDetails) return <p>Loading offer details...</p>;
 
-  if (!offerDetails || !recruiterDetails) {
-    return <p>Loading...</p>;
-  }
+    const handleApply = async () => {
+        try {
+            const response = await applyOffre(user.id, offerDetails._id);
 
-  const handleApply = async (offerId) => {
-    try {
-      const response = await applyOffre(user.id, offerId);
-      if (response === "you already applied for this offer") {
-        setApplicationStatus("You already applied");
-        setToastType("error");
-      } else {
-        setApplicationStatus("Application succeeded");
-        setToastType("success");
-      }
-    } catch (error) {
-      console.error("Failed to apply for the job:", error);
-      setApplicationStatus("Failed to apply for the job");
-      setToastType("error");
-    }
-    setShowToast(true);
-    setTimeout(() => {
-      setShowToast(false);
-    }, 3000); // Hide toast after 3 seconds
-  };
+            if (response === "you already applied for this offer") {
+                setApplicationStatus("You already applied");
+                setToastType("error");
+            } else {
+                setApplicationStatus("Application succeeded");
+                setToastType("success");
+            }
+        } catch (error) {
+            console.error("Failed to apply for the job:", error);
+            setApplicationStatus("Failed to apply for the job");
+            setToastType("error");
+        }
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3000);
+    };
 
-  const handleCancel = () => {
-    navigate("/HomeTalent");
-  };
+    return (
+        <div className="offer-details-container">
+            <div className="offer-details-content">
+                <div className="offer-details-Talent">
+                    <h1>Offer Details</h1>
+                    <h2>{offerDetails.title}</h2>
+                    <p>{offerDetails.description}</p>
+                    <p className="bold-title">
+                        Posted on: <span className="normal-text">{new Date(offerDetails.date_creation).toLocaleDateString()}</span>
+                    </p>
+                    <p className="bold-title">
+                        Expiration Date: <span className="normal-text">{new Date(offerDetails.date_expiration).toLocaleDateString()}</span>
+                    </p>
+                    <p className="bold-title">
+                        Salaire: <span className="normal-text">{offerDetails.salaire}</span>
+                    </p>
+                    <p className="bold-title">
+                        Keywords:{" "}
+                        <span className="normal-text">
+                            {offerDetails.mots_cle?.map((keyword, index) => (
+                                <span key={index}>{keyword.mot} </span>
+                            ))}
+                        </span>
+                    </p>
+                    <p className="bold-title">
+                        Languages:{" "}
+                        <span className="normal-text">
+                            {offerDetails.langues?.map((language, index) => (
+                                <span key={index}>{language.langue} </span>
+                            ))}
+                        </span>
+                    </p>
+                    {recruiterDetails && (
+                        <div className="recruiter-info-Details">
+                            <p className="bold-title">
+                                Recruiter:{" "}
+                                <span className="normal-text">
+                                    {recruiterDetails.nom} {recruiterDetails.prenom}
+                                </span>
+                            </p>
+                            {recruiterDetails.entreprise ? (
+                                <>
+                                    <p className="bold-title">
+                                        <TeamOutlined /> Company Name:{" "}
+                                        <span className="normal-text">{recruiterDetails.entreprise.nom}</span>
+                                    </p>
+                                    <p className="bold-title">
+                                        <HomeOutlined /> Address:{" "}
+                                        <span className="normal-text">{recruiterDetails.entreprise.adresse}</span>
+                                    </p>
+                                    <p className="bold-title">
+                                        <PhoneOutlined /> Telephone:{" "}
+                                        <span className="normal-text">{recruiterDetails.entreprise.telephone}</span>
+                                    </p>
+                                    <p className="bold-title">
+                                        <TeamOutlined /> Sector:{" "}
+                                        <span className="normal-text">{recruiterDetails.entreprise.secteur}</span>
+                                    </p>
+                                </>
+                            ) : (
+                                <p className="bold-title">Company information not available</p>
+                            )}
+                        </div>
+                    )}
+                </div>
 
-  return (
-    <div className="offer-details-container">
-      <div className="offer-details-content">
-        <div className="offer-details-Talent">
-          <h1>Offer Details</h1>
-          <h2>{offerDetails.title}</h2>
-          <p>{offerDetails.description}</p>
-          <p className="bold-title">
-            Posted on: <span className="normal-text">{new Date(offerDetails.date_creation).toLocaleDateString()}</span>
-          </p>
-          <p className="bold-title">
-            Expiration Date: <span className="normal-text">{new Date(offerDetails.date_expiration).toLocaleDateString()}</span>
-          </p>
+                <div className="offer-application-status-container">
+                    <div className="button-container">
+                        <button onClick={() => navigate("/HomeTalent")} className="cancel-button">
+                            Cancel
+                        </button>
+                        <button onClick={handleApply} className="apply-button">
+                            Apply
+                        </button>
+                    </div>
+                </div>
 
-          {/* Displaying Keywords */}
-          <p className="bold-title">
-            Keywords: <span className="normal-text">
-              {offerDetails.mots_cle && offerDetails.mots_cle.map((keyword, index) => (
-                <span key={index}>{keyword} </span>
-              ))}
-            </span>
-          </p>
-
-          {/* Displaying Languages */}
-          <p className="bold-title">
-            Languages: <span className="normal-text">
-              {offerDetails.langues && offerDetails.langues.map((language, index) => (
-                <span key={index}>{language} </span>
-              ))}
-            </span>
-          </p>
-
-          <div className="recruiter-info-Details">
-            <div>
-              <p className="bold-title">
-                Recruiter: <span className="normal-text">{recruiterDetails.nom} {recruiterDetails.prenom}</span>
-              </p>
-              <p className="bold-title">
-                Company: <span className="normal-text">{recruiterDetails.entreprise}</span>
-              </p>
+                <Toast message={applicationStatus} show={showToast} onClose={() => setShowToast(false)} type={toastType} />
             </div>
-          </div>
         </div>
-
-        <div className="recruiter-details-Talent">
-          <h2>Recruiter Details</h2>
-          {recruiterDetails.email && (
-            <p className="bold-title"><MailOutlined /> Email: <span className="normal-text">{recruiterDetails.email}</span></p>
-          )}
-          {recruiterDetails.entreprise && (
-            <p className="bold-title"><TeamOutlined /> Company Name: <span className="normal-text">{recruiterDetails.entreprise}</span></p>
-          )}
-          {recruiterDetails.adresse && (
-            <p className="bold-title"><HomeOutlined /> Address: <span className="normal-text">{recruiterDetails.adresse}</span></p>
-          )}
-          {recruiterDetails.telephone && (
-            <p className="bold-title"><PhoneOutlined /> Telephone Number: <span className="normal-text">{recruiterDetails.telephone}</span></p>
-          )}
-        </div>
-      </div>
-
-      <div className="offer-application-status-container">
-        <div className="button-container">
-          <button onClick={handleCancel} className="cancel-button">Cancel</button>
-          <button onClick={() => handleApply(offerDetails._id)} className="apply-button">Apply</button>
-        </div>
-      </div>
-
-      <Toast 
-        message={applicationStatus} 
-        show={showToast} 
-        onClose={() => setShowToast(false)} 
-        type={toastType} 
-      />
-    </div>
-  );
+    );
 };
 
 export default OfferDetails;

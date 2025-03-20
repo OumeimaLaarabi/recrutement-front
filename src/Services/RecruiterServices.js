@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "../Config/config.js";
 
-const apiUrl = `${BASE_URL}/recruteurs`;
+const apiUrl = `${BASE_URL}/users`;
 
 export const getAllRecruiters = async () => {
   try {
@@ -15,6 +15,8 @@ export const getAllRecruiters = async () => {
 export const getRecruiterById = async (id) => {
   try {
     const response = await axios.get(`${apiUrl}/recruteur/${id}`);
+    console.log("Réponse API recruteur:", response);
+
     return response.data; // Return recruiter data
   } catch (error) {
       console.error("Error fetching recruiter:", error);

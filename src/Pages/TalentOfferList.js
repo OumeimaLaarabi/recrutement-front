@@ -7,6 +7,7 @@ import CustomHeader from "../Components/CustomHeader";
 import { applyOffre, getAllOffres } from "../Services/OffreService";
 import { useUserContext } from "../Contexts/AuthContext";
 import Toast from "../Components/Toast";
+import "./TalentOffersList.css";
 
 const TalentOfferList = () => {
   const [jobs, setJobs] = useState([]); 

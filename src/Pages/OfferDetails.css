@@ -1,0 +1,185 @@
+/* Global styles */
+.offer-details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px;
+   /* background: linear-gradient(135deg, #f4f7f6, #e0e7ff);*/
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Take full width */
+    font-family: "Poppins", sans-serif;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Content styling */
+.offer-details-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%; /* Ensure content takes full width */
+}
+
+/* Offer & Recruiter details */
+.offer-details-Talent,
+.recruiter-details-Talent {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    /*transition: transform 0.3s ease, box-shadow 0.3s ease;*/
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 100%; /* Ensure cards take full width */
+}
+
+.offer-details-Talent:hover,
+.recruiter-details-Talent:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Titles */
+.offer-details-Talent h1 {
+    text-align: left; /* Align title to the left */
+    font-size: 32px;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #007bff, #00bfff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.offer-details-Talent h2 {
+    margin-bottom: 20px;
+    color: #007bff;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+/* Offer description */
+.offer-details-Talent p {
+    margin-bottom: 15px;
+    color: #555;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* Bold labels */
+.bold-title {
+    font-weight: 600;
+    color: #333;
+    font-size: 18px;
+}
+
+.normal-text {
+    color: #777;
+    font-size: 16px;
+}
+
+/* Recruiter Info */
+.recruiter-info-Details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+/* Recruiter Image */
+.recruiter-info-Details img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #ddd;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+.button-container {
+    display: flex;
+    justify-content: flex-start; /* Align buttons to the left */
+    gap: 20px; /* Add gap between buttons */
+    margin-top: 30px;
+}
+
+/* Apply button */
+.apply-button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #4caf50, #66bb6a);
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.apply-button:hover {
+    background: linear-gradient(135deg, #388e3c, #4caf50);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+/* Cancel button */
+.cancel-button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #f44336, #ff6659);
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+}
+
+.cancel-button:hover {
+    background: linear-gradient(135deg, #d32f2f, #f44336);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+}
+
+/* Status Container */
+.offer-application-status-container {
+    display: flex;
+    justify-content: flex-start; /* Align status to the left */
+    margin-top: 20px;
+}
+
+/* Toast styling */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: slideIn 0.5s ease-out;
+}
+
+.toast.success {
+    background: linear-gradient(135deg, #4caf50, #66bb6a);
+}
+
+.toast.error {
+    background: linear-gradient(135deg, #f44336, #ff6659);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}

@@ -64,9 +64,19 @@ export const getOffresbyRecruiter = async (id) => {
     throw error.response?.data?.message || "Erreur de connexion au serveur";
   }
 };
-export const applyOffre = async (candidatId, offreId, cv) => {
+export const applyOffre = async (candidatId, offreId, cvFile) => {
   try {
-    const response = await axios.post(`${apiUrl}/apply`, { candidatId, offreId, cv });
+    const formData = new FormData();
+    formData.append("candidatId", candidatId);
+    formData.append("offreId", offreId);
+    formData.append("cv", cvFile);
+
+    const response = await axios.post(`${apiUrl}/apply`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.error("Erreur lors de la soumission de la candidature:", error);

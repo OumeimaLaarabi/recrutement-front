@@ -35,25 +35,22 @@ const ApplyPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+  
     if (!cv) {
       setError("Veuillez sélectionner un fichier PDF.");
       return;
     }
-
-    const formData = new FormData();
-    formData.append("candidatId", user.id);
-    formData.append("offreId", id);
-    formData.append("cv", cv);
+  
     try {
-        const response = await applyOffre(user.id, id, formData);
-        console.log(response.data);
-        setSuccess("Candidature envoyée avec succès !");
-        setTimeout(() => navigate("/"), 3000);
-      } catch (error) {
-        console.error("Erreur lors de la candidature:", error);
-        setError("Échec de la candidature.");
-      }
+      const response = await applyOffre(user.id, id, cv);
+      setSuccess("Candidature envoyée avec succès !");
+      setTimeout(() => navigate("/HomeTalent"), 3000);
+    } catch (error) {
+      console.error("Erreur lors de la candidature:", error);
+      setError("Échec de la candidature.");
+    }
   };
+  
 
   if (!offer) return <p>Chargement...</p>;
 
