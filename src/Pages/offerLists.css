@@ -1,0 +1,124 @@
+.offers-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    animation: backgroundAnimation 20s infinite alternate;
+}
+  
+/* Search Container */
+.search-container {
+    position: relative;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 10px 40px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.search-bar:focus {
+    border-color: #4caf50;
+}
+
+/* Job Listings */
+.job-listings {
+    margin-top: 20px;
+}
+
+.job-item {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.job-item:hover {
+    transform: translateY(-5px);
+}
+
+.job-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.job-description {
+    color: #666;
+}
+
+.date {
+    font-style: italic;
+    color: #888;
+}
+
+/* Apply Button */
+.apply-btn {
+    background-color: #4caf50; /* Vert élégant */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+    display: inline-block;
+    text-align: center;
+    width: 150px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.apply-btn:hover {
+    background-color: #388e3c; /* Correction de la couleur */
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.apply-btn:active {
+    background-color: #2e7d32;
+    transform: scale(0.98);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.page-btn {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease-in-out;
+}
+
+.page-btn.active {
+    background-color: #2e7d32;
+}
+
+.page-btn:hover {
+    background-color: #388e3c;
+}

@@ -5,7 +5,6 @@ const HomeRecruiter = () => {
     <div>
 <RecruiterOffersList />
 
-      <h1>Home Page for Recruiter</h1>
     </div>
   );
 };

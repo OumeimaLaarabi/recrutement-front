@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { createOffre } from "../Services/OffreService"; 
+import { createOffre } from "../Services/offreService"; 
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../Contexts/AuthContext";
-
+import "./CreateOffer.css";
 const CreateOffre = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");

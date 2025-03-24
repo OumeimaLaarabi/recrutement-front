@@ -12,6 +12,8 @@ import RegisterRecruiter from "./Pages/RegisterRecruiter";
 import HomeRecruiter from "./Pages/HomeRecruiter";
 import HomeTalent from "./Pages/HomeTalent";
 import HomeAdmin from "./Pages/HomeAdmin";
+import TalentApplication from "./Pages/TalentApplication"; // Import TalentApplication
+import RecruiterApplications from "./Pages/RecruiterApplications"; // Adjust path as needed
 
 import { useUserContext } from "./Contexts/AuthContext";
 import Sidebar from "./Components/Sidebar";
@@ -20,9 +22,11 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 
 import CreateOffre from "./Pages/CreateOffre";
 import OffreList from "./Pages/OffreList";
-import UpdateOffre from "./Pages/UpdateOffre"; // Import your update page
+import UpdateOffre from "./Pages/UpdateOffre";
 import ApplyPage from "./Pages/ApplyPage"; 
 import OfferDetails from "./Pages/OffreDetails";
+import JobList from "./Pages/JobList";
+import Offers from "./Pages/Offers";
 const { Sider, Content } = Layout;
 
 function App() {
@@ -30,12 +34,12 @@ function App() {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
 
-  // Rediriger automatiquement après connexion ou inscription
+  // Automatically redirect after login or register
   useEffect(() => {
     if (user) {
       if (user.role === 0) {
         navigate("/HomeAdmin");
-      } else if  (user.role === "recruteur" )  {
+      } else if (user.role === "recruteur") {
         navigate("/HomeRecruiter");
       } else {
         navigate("/HomeTalent");
@@ -67,17 +71,19 @@ function App() {
               <Routes>
                 <Route path="/HomeTalent" element={<HomeTalent />} />
                 <Route path="/HomeRecruiter" element={<HomeRecruiter />} />
-                <Route path="/HomeAdmin" element={<HomeAdmin/>} />
+                <Route path="/HomeAdmin" element={<HomeAdmin />} />
 
-                {/* Routes pour la gestion des offres */}
+                {/* Routes for Talent Application */}
+                <Route path="/TalentApplication" element={<TalentApplication />} />
+                <Route path="/recruiter-applications" element={<RecruiterApplications recruteurId={user.id} />} />
+
+                {/* Routes for managing offers */}
                 <Route path="/offres/new" element={<CreateOffre />} />
                 <Route path="/offres" element={<OffreList />} />
                 <Route path="/deleteoffre/:id" element={<OffreList />} />
                 <Route path="/offres/edit/:id" element={<UpdateOffre />} />
                 <Route path="/apply/:id" element={<ApplyPage />} />
-
-                <Route path="/OfferDetails/:id" element={<OfferDetails />} />
-
+                <Route path="/OfferDetails/:id" element={<ApplyPage />} />
               </Routes>
             </Content>
           </Layout>
@@ -93,6 +99,7 @@ function App() {
             <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/RegisterTalent" element={<RegisterTalent />} />
             <Route path="/RegisterRecruiter" element={<RegisterRecruiter />} />
+            <Route path="/JobList" element={<Offers/>} />
           </Routes>
         </>
       )}

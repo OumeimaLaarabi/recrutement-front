@@ -7,12 +7,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Header } from "antd/es/layout/layout";
 import CustomHeader from "../Components/CustomHeader";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { getAllOffres } from "../Services/offreService";
 
 function JobList() {
   const [offers, setOffers] = useState([]);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [jobs, setJobs] = useState([]); 
+
+  const [loading, setLoading] = useState(true);
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
@@ -25,18 +29,18 @@ function JobList() {
   );
 
   useEffect(() => {
-    const fetchOffers = async () => {
-      try {
-        const data = await getOffres();
-        setOffers(data);
-      } catch (error) {
-        console.error("Error fetching offers:", error);
-        setError("Failed to fetch offers. Please try again.");
-      }
-    };
-
-    fetchOffers();
-  }, []);
+     const fetchOffres = async () => {
+       try {
+         const data = await getAllOffres();
+         setJobs(data); // ✅ Stocker les offres récupérées
+       } catch (error) {
+         console.error("Erreur lors du chargement des offres:", error);
+       } finally {
+         setLoading(false);
+       }
+     };
+     fetchOffres();
+   }, []);
 
   return (
     <>

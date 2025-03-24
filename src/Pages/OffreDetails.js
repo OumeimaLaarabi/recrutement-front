@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getOfferById, applyOffre } from "../Services/OffreService";
+import { getOfferById, applyOffre } from "../Services/offreService";
 import { getRecruiterById } from "../Services/RecruiterServices";
 import { MailOutlined, PhoneOutlined, TeamOutlined, HomeOutlined } from "@ant-design/icons";
 import Toast from "../Components/Toast";
@@ -66,6 +66,7 @@ const OfferDetails = () => {
         }
         setShowToast(true);
         setTimeout(() => setShowToast(false), 3000);
+        navigate(`/apply/:id`);   // Then navigate to ApplyPage
     };
 
     return (

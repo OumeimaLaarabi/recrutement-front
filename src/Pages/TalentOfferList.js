@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Layout, Spin } from "antd";
 import CustomHeader from "../Components/CustomHeader";
-import { applyOffre, getAllOffres } from "../Services/OffreService";
+import { applyOffre, getAllOffres } from "../Services/offreService";
 import { useUserContext } from "../Contexts/AuthContext";
 import Toast from "../Components/Toast";
 import "./TalentOffersList.css";

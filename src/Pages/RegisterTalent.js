@@ -20,47 +20,44 @@ const RegisterTalent = () => {
 
   const { setUser } = useUserContext();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setRegisterError(null);
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  setRegisterError(null);
 
-    try {
-      const response = await registerCandidate(
-        prenom,
-        nom,
-        email,
-        password,
-        adresse,
-        telephone
-      );
-      console.log("Response from backend:", response); // Debugging log
+  try {
+    const response = await registerCandidate(
+      prenom,
+      nom,
+      email,
+      password,
+      adresse,
+      telephone
+    );
+    console.log("Response from backend:", response); // Debugging log
 
-      const { token } = response;
+    const { token } = response;
 
-      // Verify if the token is valid
-      if (typeof token === "string" && token.trim() !== "") {
-        const userInfo = decodeToken(token);  // Decode token only if it's valid
-        setUser(userInfo);
+    // Verify if the token is valid
+    if (typeof token === "string" && token.trim() !== "") {
+      const userInfo = decodeToken(token);  // Decode token only if it's valid
+      setUser (userInfo);
 
-        // Navigate to HomeTalent directly after successful registration
-        if (userInfo.role === "candidat") {
-          navigate("/HomeTalent");  // Redirect to HomeTalent after registration
-        }
-      } else {
-        throw new Error("Invalid token received");
-      }
-    } catch (error) {
-      console.error("Error during registration:", error);
-      if (error.response && error.response.status === 404) {
-        setRegisterError("User not found. Please check your email and try again.");
-      } else if (error.response && error.response.status === 400) {
-        setRegisterError("Invalid email or password. Please try again.");
-      } else {
-        setRegisterError("An error occurred. Please try again.");
-      }
+      // Navigate to Login after successful registration
+      navigate("/login");  // Redirect to Login after registration
+    } else {
+      throw new Error("Invalid token received");
     }
-  };
-
+  } catch (error) {
+    console.error("Error during registration:", error);
+    if (error.response && error.response.status === 404) {
+      setRegisterError("User  not found. Please check your email and try again.");
+    } else if (error.response && error.response.status === 400) {
+      setRegisterError("Invalid email or password. Please try again.");
+    } else {
+      setRegisterError("An error occurred. Please try again.");
+    }
+  }
+};
 
 
   return (

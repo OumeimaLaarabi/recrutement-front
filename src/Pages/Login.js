@@ -81,7 +81,7 @@ const Login = () => {
           <Link to="/forgot-password">Forgot password?</Link>
         </div>
 
-        <button className="log-in-button" type="submit">
+        <button className="log-in-buttons" type="submit">
           Continue
         </button>
       </form>
@@ -89,7 +89,7 @@ const Login = () => {
         <span className="text">----- Don’t have an Account? -----</span>
       </div>
       <Link style={{ textDecoration: "none" }} to="/Register">
-        <button className="sign-up-Button" type="submit">
+        <button className="sign-up-Buttons" type="submit">
           Sign up
         </button>
       </Link>
