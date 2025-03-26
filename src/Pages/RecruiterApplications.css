@@ -1,68 +1,154 @@
+/* RecruiterApplications.css */
+
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+  color: #2d3748;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #4f46e5, #a855f7);
+  border-radius: 2px;
+}
+
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+thead {
+  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  color: white;
+}
+
+th {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+th:first-child {
+  border-top-left-radius: 10px;
+}
+
+th:last-child {
+  border-top-right-radius: 10px;
+}
+
+tr {
+  transition: all 0.2s ease;
+}
+
+td {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+
+td:first-child {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+a.text-blue-500 {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+a.text-blue-500:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+a.text-blue-500::before {
+  content: '📄';
+}
+
+select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background-color: white;
+  color: #4a5568;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+select:focus {
+  outline: none;
+  border-color: #a5b4fc;
+  box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.3);
+}
+
+/* Status badges */
+td:nth-child(6) {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+td:nth-child(6)[data-status="PENDING"] {
+  color: #f59e0b;
+}
+
+td:nth-child(6)[data-status="ACCEPTED"] {
+  color: #10b981;
+}
+
+td:nth-child(6)[data-status="REFUSED"] {
+  color: #ef4444;
+}
+
+/* Score styling */
+td:nth-child(4) {
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  table {
+    display: block;
+    overflow-x: auto;
   }
   
   th, td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
+    padding: 0.75rem;
   }
-  
-  th {
-    background-color: #f4f4f4;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  a {
-    color: #4caf50;
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Style for the CV Modal */
-.cv-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .cv-modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 800px;
-    width: 90%;
-  }
-  
-  .cv-modal button {
-    margin-top: 10px;
-    padding: 8px 15px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .cv-modal button:hover {
-    background-color: #45a049;
-  }
-  
+}

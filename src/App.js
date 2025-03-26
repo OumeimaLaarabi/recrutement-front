@@ -69,6 +69,7 @@ function App() {
           <Layout className="site-layout">
             <Content className="content">
               <Routes>
+              <Route path="/" element={<Home />} />
                 <Route path="/HomeTalent" element={<HomeTalent />} />
                 <Route path="/HomeRecruiter" element={<HomeRecruiter />} />
                 <Route path="/HomeAdmin" element={<HomeAdmin />} />
