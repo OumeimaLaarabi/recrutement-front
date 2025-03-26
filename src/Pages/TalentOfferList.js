@@ -37,11 +37,16 @@ const TalentOfferList = () => {
     setSearch(event.target.value);
   };
 
-  const applyOffre = (offerId) => {
-    console.log("Offre ID cliquée :", offerId);
+  const applyOffre = async (offerId) => {
+  if (!user || !user.id) {
+    console.error("L'utilisateur n'est pas connecté ou son ID est manquant.");
+    return;
+  }
 
-    navigate(`/apply/${offerId}`); // Redirection vers ApplyPage.js
-  };
+  console.log("Candidature pour l'offre :", offerId, "avec l'utilisateur :", user.id);
+  
+  navigate(`/apply/${offerId}`); // Assure-toi que l'ID est bien passé dans l'URL
+};
 
 
   const formatDate = (dateString) => {

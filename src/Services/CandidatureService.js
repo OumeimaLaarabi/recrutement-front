@@ -39,28 +39,64 @@ export const getApplicationsByCandidate = async (candidatId) => {
       console.error("Error fetching applications by recruiter:", error);
       throw error.response?.data?.message || "Unauthorized or error connecting to the server";
     }
-  };
-  
-  export const updateCandidatureStatus = async (candidatureId, newStatus) => {
-    console.log("URL for update request:", `${apiUrl}/${candidatureId}/statut`);
-  
+  };export const updateCandidatureStatus = async (id, statuts, offerId, talentId) => {
     try {
-      const token = localStorage.getItem("token"); // Get the token from localStorage
+      // Get token from localStorage
+      const token = JSON.parse(localStorage.getItem('user'))?.token;
+      
+      if (!token) {
+        throw new Error("No authentication token found. Please log in.");
+      }
   
+      console.log(`📩 Sending update for application ${id}`);
+      
       const response = await axios.patch(
-        `${apiUrl}/${candidatureId}/statut`,
-        { statuts: newStatus }, // Send the new status in the request body
+        `${BASE_URL}/candidatures/${id}/statuts`,  // Removed duplicate /api/candidatures
+        { statuts, offerId, talentId },
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Use the token for authorization
-          },
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
         }
       );
-  
-      return response.data; // This will contain the updated candidature data
+      
+      console.log("✅ Server response:", response.data);
+      return response.data;
+      
     } catch (error) {
-      console.error("Error updating candidature status:", error);
-      throw error; // Propagate error for handling in the component
+      console.error("❌ API Error:", {
+        message: error.response?.data?.message || error.message,
+        status: error.response?.status,
+        data: error.response?.data
+      });
+      
+      throw new Error(
+        error.response?.data?.message || 
+        `Failed to update application status: ${error.message}`
+      );
     }
   };
-  
+// Récupérer toutes les candidatures
+export const fetchCandidatures = async () => {
+  try {
+    const token = JSON.parse(localStorage.getItem('user'))?.token;  // Get token from localStorage
+
+    if (!token) {
+      throw new Error("No token found. Please log in.");
+    }
+
+    // Set the Authorization header with the token
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const response = await axios.get(`${apiUrl}`, config);  // Inclure config ici
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des candidatures :", error);
+    throw error;
+  }
+};

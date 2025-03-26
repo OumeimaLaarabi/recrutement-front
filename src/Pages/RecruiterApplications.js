@@ -1,145 +1,95 @@
-import React, { useEffect, useState } from "react";
-import { getApplicationsByRecruiter } from "../Services/CandidatureService"; // Adjust import path as needed
-import UpdateStatusButton from "./UpdateStatus"; // Import the UpdateStatusButton component
+import { useEffect, useState } from "react";
+import { updateCandidatureStatus, fetchCandidatures } from "../Services/CandidatureService";
 import "./RecruiterApplications.css";
 
-// RecruiterApplications component
-const RecruiterApplications = ({ recruteurId }) => {
-  const [applications, setApplications] = useState([]);
-  const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentCV, setCurrentCV] = useState(null); // State to store current CV
-  const [isPdf, setIsPdf] = useState(false); // State to track if the CV is a PDF
+const RecruiterApplications = () => {
+  const [candidatures, setCandidatures] = useState([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchApplications = async () => {
+    const getUser = () => {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      setUser(storedUser);
+    };
+
+    const loadCandidatures = async () => {
       try {
-        const data = await getApplicationsByRecruiter(recruteurId);
-        
-        setApplications(data.candidatures); // Set the data
-        console.log(data.candidatures); // Log the applications array to check the data
-      } catch (err) {
-        setError(err.message);
+        const data = await fetchCandidatures();
+        setCandidatures(data);
+      } catch (error) {
+        console.error("Erreur lors du chargement des candidatures :", error);
       }
     };
-  
-    fetchApplications();
-  }, [recruteurId]);
-  
-  // Function to open CV in a modal
-  const handleCVClick = (cvUrl) => {
-    setCurrentCV(cvUrl);
 
-    // Check if the CV is a PDF (Cloudinary files usually have a .pdf extension)
-    if (cvUrl.endsWith(".pdf")) {
-      setIsPdf(true);
-    } else {
-      setIsPdf(false);
-    }
+    getUser();
+    loadCandidatures();
+  }, []);
 
-    setIsModalOpen(true);
-  };
-
-  // Function to handle download
-  const handleDownload = () => {
-    if (currentCV) {
-      window.open(currentCV, "_blank"); // Opens in a new tab for download
-    }
-  };
-
-  // Function to close the modal
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setCurrentCV(null);
-    setIsPdf(false);
-  };
-
-  // Function to return status color based on the application status
-  const getStatusColor = (status) => {
-    if (status === "PENDING") return "orange";
-    if (status === "ACCEPTED") return "green";
-    if (status === "REFUSED") return "red";
-    return "black"; // Default if status is not recognized
-  };
-
-  // Function to format the score as percentage
   const formatScoreAsPercentage = (score) => {
     if (score !== undefined && score !== null) {
       return `${score}%`;
     }
-    return "N/A"; // Return 'N/A' if score is not available
+    return "N/A";
+  };
+
+  const isRecruteurOrAdmin = user && (user.role === "recruteur" || user.role === "admin");
+
+  const handleStatusChange = async (id, newStatus, offerId, talentId) => {
+    try {
+      await updateCandidatureStatus(id, newStatus, offerId, talentId);
+      setCandidatures((prev) =>
+        prev.map((c) => (c._id === id ? { ...c, statuts: newStatus } : c))
+      );
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour du statut :", error);
+    }
   };
 
   return (
-    <div>
-      <h2>Liste des Candidatures</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <table>
+    <div className="container mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4">Liste des Candidatures</h2>
+      <table className="w-full border-collapse border border-gray-300">
         <thead>
-          <tr>
-            <th>Nom du Candidat</th>
-            <th>CV</th>
-            <th>Score</th>
-            <th>Date de Candidature</th>
-            <th>Status</th>
-            <th>Actions</th> {/* Added a column for the status update button */}
+          <tr className="bg-gray-200">
+            <th className="border p-2">Offre</th> {/* New column for offer title */}
+            <th className="border p-2">Nom du Candidat</th>
+            <th className="border p-2">CV</th>
+            <th className="border p-2">Score</th>
+            <th className="border p-2">Date de Candidature</th>
+            <th className="border p-2">Statut</th>
+            {isRecruteurOrAdmin && <th className="border p-2">Actions</th>}
           </tr>
         </thead>
         <tbody>
-        {applications.map((application, index) => {
-  console.log(application); // Log the application object to check its structure
-  return (
-    <tr key={application._id}>
-                  <p>Application ID: {application._id}</p> {/* Log the ID here */}
-
-      <td>{application.candidatName}</td>
-      <td>
-        <a href="#" onClick={() => handleCVClick(application.cv)}>
-          Voir CV
-        </a>
-      </td>
-      <td>{formatScoreAsPercentage(application.score)}</td>
-      <td>{application.applicationDate}</td>
-      <td style={{ color: getStatusColor(application.statuts) }}>
-        {application.statuts}
-      </td>
-      <td>
-        {/* Add the UpdateStatusButton here */}
-        <UpdateStatusButton
-          candidatureId={application.id} // Ensure _id exists here
-          currentStatus={application.statuts}
-        />
-      </td>
-    </tr>
-  );
-})}
+          {candidatures.map((c) => (
+            <tr key={c._id} className="border">
+              <td className="border p-2">{c.offre?.title || "N/A"}</td> {/* Offer title */}
+              <td className="border p-2">{c.candidat?.nom || "N/A"}</td>
+              <td className="border p-2">
+                <a href={c.cv} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                  Voir CV
+                </a>
+              </td>
+              <td className="border p-2">{formatScoreAsPercentage(c.score)}</td>
+              <td className="border p-2">{new Date(c.date_de_candidature).toLocaleDateString()}</td>
+              <td className="border p-2">{c.statuts}</td>
+              {isRecruteurOrAdmin && (
+                <td className="border p-2">
+                  <select
+                    value={c.statuts}
+                    onChange={(e) => handleStatusChange(c._id, e.target.value, c.offre?._id, c.candidat?._id)}
+                    className="p-1 border rounded"
+                  >
+                    <option value="PENDING">PENDING</option>
+                    <option value="ACCEPTED">ACCEPTED</option>
+                    <option value="REFUSED">REFUSED</option>
+                  </select>
+                </td>
+              )}
+            </tr>
+          ))}
         </tbody>
       </table>
-
-      {/* Modal to preview CV */}
-      {isModalOpen && (
-        <div className="cv-modal">
-          <div className="cv-modal-content">
-            <h3>Preview CV</h3>
-            {isPdf ? (
-              <iframe
-                src={currentCV}
-                width="100%"
-                height="600px"
-                title="CV Preview"
-                frameBorder="0"
-              ></iframe>
-            ) : (
-              <img src={currentCV} alt="CV Preview" width="100%" />
-            )}
-            <div>
-              <button onClick={handleDownload}>Download CV</button>
-              <button onClick={handleCloseModal}>Cancel</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
