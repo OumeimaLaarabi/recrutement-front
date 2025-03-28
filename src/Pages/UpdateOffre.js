@@ -122,7 +122,20 @@ const UpdateOffre = () => {
               className="form-input"
             />
           </div>
-
+          <div className="form-group">
+            <label htmlFor="salaire" className="form-label">
+              Salaire:
+            </label>
+            <input
+              id="Salaire"
+              type="number"
+              name="Salaire"
+              value={offre.salaire || ""}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
           {error && <p className="error-message">{error}</p>}
 
           <button type="submit" className="submit-btn" disabled={loading}>

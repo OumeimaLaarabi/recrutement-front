@@ -78,16 +78,7 @@ export const registerRecruiter = async (firstName, lastName, email, password, en
   }
 };
 
-// Fonction to confirm the profile of a candidate (Talent)
-export const confirmProfile = async (userId) => {
-  try {
-    const response = await axios.post(`${BASE_URL}/users/candidat/confirm-profile`, { userId });
-    return response.data;  // Return the confirmation response data
-  } catch (error) {
-    console.error("Failed to confirm profile:", error);
-    throw error;
-  }
-};
+
 export const GetMonthlyUserCount = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/auth/monthlyUserCount`);

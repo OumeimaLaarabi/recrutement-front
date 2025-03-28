@@ -15,26 +15,27 @@ export const UserProvider = ({ children }) => {
   const handleLogin = async (email, password) => {
     try {
       const { token } = await login(email, password);
+      localStorage.setItem("token", token); // ✅ Store token in localStorage
       const userInfo = decodeToken(token);
+
       setUser(userInfo);
-      console.log(userInfo);
       return userInfo;
     } catch (error) {
       console.error("Failed to handle login:", error);
       throw error;
     }
   };
+  
+  const handleLogout = () => {
+    console.log("Logging out..."); 
+    //localStorage.removeItem("user"); 
+    localStorage.clear();
 
-  const handleLogout = async () => {
-    setLoading(true);
-    try {
-      localStorage.removeItem("token"); // Suppression du token
-      setUser(null);
-      navigate("/login");
-    } finally {
-      setLoading(false);
-    }
+    //localStorage.removeItem("token"); 
+    setUser(null);
+    navigate("/login");
   };
+  
   
   return (
     <AuthContext.Provider value={{ user, handleLogin, handleLogout, setUser, loading }}>
