@@ -113,6 +113,24 @@ function RecruiterOffersList() {
                   <h3 className="offer-title">{job.title}</h3>
                   <p className="offer-description">{job.description}</p>
                   <p className="offer-date">{formatDate(job.date_creation)}</p>
+                  <p className="offer-salaire">{job.salaire}</p>
+                  <p className="offer-cle">
+                        Keywords:{" "}
+                        <span className="normal-text">
+                            {job.mots_cle?.map((keyword, index) => (
+                                <span key={index}>{keyword.mot} </span>
+                            ))}
+                        </span>
+                    </p>
+                    <p className="offer-langue">
+                        Languages:{" "}
+                        <span className="normal-text">
+                            {job.langues?.map((language, index) => (
+                                <span key={index}>{language.langue} </span>
+                            ))}
+                        </span>
+                    </p>
+
                 </div>
                 <div className="offer-actions">
                   {/* Use handleUpdate for updating the offer */}

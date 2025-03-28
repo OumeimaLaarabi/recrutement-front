@@ -101,7 +101,7 @@ const TalentOfferList = () => {
                       <h3 className="offer-title-Talent">{offer.title}</h3>
                     </Link>
                     <p className="offer-description-Talent">{offer.description}</p>
-                    <p className="offer-date-Talent">{formatDate(offer.createdDate)}</p>
+                    <p className="offer-date-Talent">{formatDate(offer.date_creation)}</p>
                   </div>
                   <div className="offer-actions-Talent">
                   <button

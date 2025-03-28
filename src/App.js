@@ -27,6 +27,7 @@ import ApplyPage from "./Pages/ApplyPage";
 import OfferDetails from "./Pages/OffreDetails";
 import JobList from "./Pages/JobList";
 import Offers from "./Pages/Offers";
+import TalentProfile from "./Pages/TalentProfile";
 const { Sider, Content } = Layout;
 
 function App() {
@@ -73,6 +74,7 @@ function App() {
                 <Route path="/HomeTalent" element={<HomeTalent />} />
                 <Route path="/HomeRecruiter" element={<HomeRecruiter />} />
                 <Route path="/HomeAdmin" element={<HomeAdmin />} />
+                <Route path="/candidat/:id" element={<TalentProfile candidatId={user.id}/>} />
 
                 {/* Routes for Talent Application */}
                 <Route path="/TalentApplication" element={<TalentApplication />} />
@@ -84,7 +86,7 @@ function App() {
                 <Route path="/deleteoffre/:id" element={<OffreList />} />
                 <Route path="/offres/edit/:id" element={<UpdateOffre />} />
                 <Route path="/apply/:id" element={<ApplyPage />} />
-                <Route path="/OfferDetails/:id" element={<ApplyPage />} />
+                <Route path="/OfferDetails/:id" element={<OfferDetails />} />
               </Routes>
             </Content>
           </Layout>

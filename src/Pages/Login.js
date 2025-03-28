@@ -24,7 +24,7 @@ const Login = () => {
       // const user  = await login(email, password);
       const response = await login(email, password);
       const user = response.data.user;
-      console.log("response",response)
+     // console.log("response",response)
 
       // Stocker le token dans localStorage
       localStorage.setItem("token", user.token);

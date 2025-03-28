@@ -23,6 +23,7 @@ const OfferDetails = () => {
         const fetchOfferById = async () => {
             try {
                 const offerData = await getOfferById(id);
+                console.log("Offer Data:", offerData); // Log the fetched offer data
                 setOfferDetails(offerData);
 
                 if (offerData.id_recruteur) {
@@ -48,9 +49,9 @@ const OfferDetails = () => {
     if (error) return <p className="error-messages">{error}</p>;
     if (!offerDetails) return <p>Loading offer details...</p>;
 
-    const handleApply = async () => {
+    const handleApply = async (offerId) => {
         try {
-            const response = await applyOffre(user.id, offerDetails._id);
+            const response = await applyOffre(user.id, offerId);
 
             if (response === "you already applied for this offer") {
                 setApplicationStatus("You already applied");
@@ -66,7 +67,7 @@ const OfferDetails = () => {
         }
         setShowToast(true);
         setTimeout(() => setShowToast(false), 3000);
-        navigate(`/apply/:id`);   // Then navigate to ApplyPage
+        navigate(`/apply/${offerId}`);   // Then navigate to ApplyPage
     };
 
     return (
@@ -88,8 +89,8 @@ const OfferDetails = () => {
                     <p className="bold-title">
                         Keywords:{" "}
                         <span className="normal-text">
-                            {offerDetails.mots_cle?.map((keyword, index) => (
-                                <span key={index}>{keyword.mot} </span>
+                            {offerDetails.mots_cle?.map((mots_cle) => (
+                                <span key={mots_cle}>{mots_cle.mot} </span>
                             ))}
                         </span>
                     </p>
@@ -140,9 +141,12 @@ const OfferDetails = () => {
                         <button onClick={() => navigate("/HomeTalent")} className="cancel-button">
                             Cancel
                         </button>
-                        <button onClick={handleApply} className="apply-button">
-                            Apply
-                        </button>
+                        <button
+  className="apply-button-Talent"
+  onClick={() => handleApply(offerDetails._id)}
+>
+  Postuler
+</button>
                     </div>
                 </div>
 

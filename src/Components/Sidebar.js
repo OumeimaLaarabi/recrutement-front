@@ -47,7 +47,7 @@ const Sidebar = ({ collapsed }) => {
 
         <Menu.Item key="3" icon={<ProfileOutlined />}>
           {user.role === "candidat" ? (
-            <Link to="/ProfileTalent">Profile</Link>
+            <Link to="/candidat/:id">Profile</Link>
           ) : (
             <Link to="/RecruiterProfile">Profile</Link>
           )}
