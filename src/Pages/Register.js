@@ -1,53 +1,39 @@
 import { useState } from "react";
-import "./Register.css";
-import RecruiterImage from "../Images/recruiter.svg"; // Renamed the imported image
-import TalentImage from "../Images/talent.svg"; // Renamed the imported image
 import { Link } from "react-router-dom";
+import "./Register.css";
+import RecruiterImage from "../Images/recruiter.svg";
+import TalentImage from "../Images/talent.svg";
 
 const Register = () => {
   const [selection, setSelection] = useState("");
 
-  const handleSelect = (role) => {
-    setSelection(role);
-  };
-
   return (
-    <div>
-      <h1 className="regH1">Would you like to join us as?</h1>
+    <div className="register-container">
+      <h1 className="register-title">Join as a recruiter or candidate</h1>
 
-      <div className="home">
+      <div className="options-container">
+        {/* Recruiter Option */}
         <div
-          className={`home-option ${selection === "recruteur" ? "selected" : ""}`}
-          onClick={() => handleSelect("recruteur")}
+          className={`option-card ${selection === "recruteur" ? "selected" : ""}`}
+          onClick={() => setSelection("recruteur")}
         >
           <div className="option-content">
-            <div>
-              <img src={RecruiterImage} alt="" />
-              Recruteur
-              <span className="radio-circle"></span>
-            </div>
-            <span className="option-description">
-              Create, manage, and publish job offers with detailed descriptions.
-              Customize the application process for candidates.
-            </span>
+            <img src={RecruiterImage} alt="Recruiter" />
+            <p className="option-title">I’m a recruiter, hiring for a project</p>
           </div>
+          {selection === "recruteur" && <span className="selected-indicator">✔</span>}
         </div>
 
+        {/* Candidate Option */}
         <div
-          className={`home-option ${selection === "candidat" ? "selected" : ""}`}
-          onClick={() => handleSelect("candidat")}
+          className={`option-card ${selection === "candidat" ? "selected" : ""}`}
+          onClick={() => setSelection("candidat")}
         >
           <div className="option-content">
-            <div>
-              <img src={TalentImage} alt="" />
-              Talent
-              <span className="radio-circle"></span>
-            </div>
-            <span className="option-description">
-              Create your profile, explore job offers, and easily apply online.
-              Track the status of your applications.
-            </span>
+            <img src={TalentImage} alt="Talent" />
+            <p className="option-title">I’m a candidate, looking for work</p>
           </div>
+          {selection === "candidat" && <span className="selected-indicator">✔</span>}
         </div>
       </div>
 
@@ -55,17 +41,13 @@ const Register = () => {
         to={selection === "candidat" ? "/RegisterTalent" : "/RegisterRecruiter"}
         style={{ textDecoration: "none" }}
       >
-        <div className="join-button">Join as</div>
+        <button className={`join-button ${selection ? "active" : "disabled"}`}>
+          {selection === "recruteur" ? "Join as Recruiter" : "Join as Candidate"}
+        </button>
       </Link>
-      
-      <div className="container">
-        <span className="text">
-          ----- Already have an account?
-          <Link style={{ textDecoration: "none" }} to="/Login">
-            <span href="/login" className="link">Log In</span>
-          </Link>
-          -----
-        </span>
+
+      <div className="login-text">
+        Already have an account? <Link to="/Login" className="login-link">Log In</Link>
       </div>
     </div>
   );

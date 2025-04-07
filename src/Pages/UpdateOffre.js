@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate for redirect
-import { getOfferById, updateOffre } from "../Services/offreService" // Import service methods
-import { FaArrowLeft } from "react-icons/fa"; // Import the back arrow icon
+import { useParams, useNavigate } from "react-router-dom"; 
+import { getOfferById, updateOffre } from "../Services/offreService" 
+import { FaArrowLeft } from "react-icons/fa"; 
 import "./Updateoffre.css";
 const UpdateOffre = () => {
-  const { id } = useParams(); // Get offer ID from URL params
-  const navigate = useNavigate(); // Hook to handle navigation after updating the offer
+  const { id } = useParams(); 
+  const navigate = useNavigate(); 
 
-  const [offre, setOffre] = useState({}); // State to hold the offer data
-  const [loading, setLoading] = useState(true); // State to handle loading state
-  const [error, setError] = useState(null); // State to handle error messages
+  const [offre, setOffre] = useState({}); 
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
 
-  // Fetch offer details by ID when the component mounts
   useEffect(() => {
     const fetchOffre = async () => {
       try {
         const data = await getOfferById(id);
-        setOffre(data); // Set the fetched offer data
+        setOffre(data); 
         setLoading(false);
       } catch (err) {
         setError("Erreur lors de la récupération de l'offre");
@@ -31,19 +30,18 @@ const UpdateOffre = () => {
     setOffre({ ...offre, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission to update the offer
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateOffre(id, offre); // Call service method to update the offer
-      navigate("/HomeRecruiter"); // Redirect to the offers list after successful update
+      await updateOffre(id, offre); 
+      navigate("/HomeRecruiter");
     } catch (err) {
       setError("Erreur lors de la mise à jour de l'offre");
     }
   };
 
-  if (loading) return <p>Chargement...</p>; // Loading state
-  if (error) return <p>{error}</p>; // Error state
+  if (loading) return <p>Chargement...</p>; 
+  if (error) return <p>{error}</p>; 
 
   return (
     <div className="create-container">
@@ -67,19 +65,7 @@ const UpdateOffre = () => {
               className="form-input"
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="description" className="form-label">
-              Description:
-            </label>
-            <textarea
-              id="description"
-              name="description"
-              value={offre.description || ""}
-              onChange={handleChange}
-              required
-              className="form-textarea"
-            />
-          </div>
+       
           <div className="form-group">
             <label htmlFor="date_expiration" className="form-label">
               Expiration Date:
@@ -127,15 +113,29 @@ const UpdateOffre = () => {
               Salaire:
             </label>
             <input
-              id="Salaire"
+              id="salaire"
               type="number"
-              name="Salaire"
+              name="salaire"
               value={offre.salaire || ""}
               onChange={handleChange}
               required
               className="form-input"
             />
           </div>
+          <div className="form-group description">
+  <label htmlFor="description" className="form-label">
+    Description:
+  </label>
+  <textarea
+    id="description"
+    name="description"
+    value={offre.description || ""}
+    onChange={handleChange}
+    required
+    className="form-textarea"
+  />
+</div>
+
           {error && <p className="error-message">{error}</p>}
 
           <button type="submit" className="submit-btn" disabled={loading}>

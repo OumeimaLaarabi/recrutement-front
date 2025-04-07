@@ -37,41 +37,38 @@ export const registerCandidate = async (prenom,nom , email, password, adresse, t
   }
 };
 
-
-export const registerRecruiter = async (firstName, lastName, email, password, entreprise) => {
+export const registerRecruiter = async (firstName, lastName, email, password, entreprise, logoFile) => {
   try {
-    // Log the request data before sending it
-    console.log("Sending request with data:", {
-      prenom: firstName,
-      nom: lastName,
-      email,
-      password,
-      entrepriseNom: entreprise.nom,
-      entrepriseMatricule: entreprise.matricule,
-      entrepriseAdresse: entreprise.adresse,
-      entrepriseTelephone: entreprise.telephone,
-      entrepriseSecteur: entreprise.secteur,
-    });
-
-    // Send the request
-    const response = await axios.post(`${BASE_URL}/auth/register/recruteur`, {
-      prenom: firstName,
-      nom: lastName,
-      email,
-      password,
-      entrepriseNom: entreprise.nom,
-      entrepriseMatricule: entreprise.matricule,
-      entrepriseAdresse: entreprise.adresse,
-      entrepriseTelephone: entreprise.telephone,
-      entrepriseSecteur: entreprise.secteur,
-    });
-
-    if (response.status === 200 && response.data.user) {
-      // Store the user data in localStorage
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+    const formData = new FormData();
+    formData.append("prenom", firstName);
+    formData.append("nom", lastName);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("entrepriseNom", entreprise.nom);
+    formData.append("entrepriseMatricule", entreprise.matricule);
+    formData.append("entrepriseAdresse", entreprise.adresse);
+    formData.append("entrepriseTelephone", entreprise.telephone);
+    formData.append("entrepriseSecteur", entreprise.secteur);
+    
+    // Ajouter le logo s'il est fourni
+    if (logoFile) {
+      formData.append("logo", logoFile);
     }
 
-    return response.data;  // Return the response data
+    // Log des données envoyées
+    console.log("Sending request with data:", Object.fromEntries(formData));
+
+    const response = await axios.post(`${BASE_URL}/auth/register/recruteur`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    if (response.status === 201) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+
+    return response.data;
   } catch (error) {
     console.error("Erreur lors de l'enregistrement du recruteur :", error.response?.data || error.message);
     throw new Error(error.response?.data?.message || "Erreur lors de l'enregistrement. Veuillez réessayer.");

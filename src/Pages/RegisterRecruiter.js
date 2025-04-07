@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./RegisterTalent.css";
+import "./RegisterRecruiter.css";
 import { registerRecruiter } from "../Services/UserServices";
 import { useUserContext } from "../Contexts/AuthContext";
-import { decodeToken } from "../Utils/TokenUtils";
 
 const RegisterRecruiter = () => {
   const [formData, setFormData] = useState({
@@ -17,12 +16,18 @@ const RegisterRecruiter = () => {
     entrepriseTelephone: "",
     entrepriseSecteur: "",
   });
+
+  const [logo, setLogo] = useState(null);
   const [message, setMessage] = useState({ type: "", text: "" });
   const navigate = useNavigate();
   const { setUser } = useUserContext();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e) => {
+    setLogo(e.target.files[0]); // Stocke le fichier logo sélectionné
   };
 
   const validateForm = () => {
@@ -41,6 +46,10 @@ const RegisterRecruiter = () => {
       setMessage({ type: "error", text: "Le matricule doit contenir exactement 10 caractères alphanumériques." });
       return false;
     }
+    if (!logo) {
+      setMessage({ type: "error", text: "Veuillez télécharger un logo d'entreprise." });
+      return false;
+    }
     return true;
   };
 
@@ -48,10 +57,8 @@ const RegisterRecruiter = () => {
     e.preventDefault();
     setMessage({ type: "", text: "" });
 
-    if (!validateForm()) {
-      return;
-    }
- 
+    if (!validateForm()) return;
+
     try {
       const response = await registerRecruiter(
         formData.firstName,
@@ -64,31 +71,20 @@ const RegisterRecruiter = () => {
           adresse: formData.entrepriseAdresse,
           telephone: formData.entrepriseTelephone,
           secteur: formData.entrepriseSecteur,
-        }
+        },
+        logo // Ajout du fichier logo
       );
-  
-      console.log("Réponse du backend:", response);
-  
-      const userInfo = decodeToken(response.token);
-      console.log(userInfo);
-      
-      // Mets à jour le contexte avec les données de l'utilisateur
-      setUser(userInfo);
-      
-      // Vérifie si le rôle est correct
-      if (userInfo && userInfo.role === "recruteur") {
-        navigate("/HomeRecruiter");
-      } else {
-        setMessage({ type: "error", text: "Erreur lors de la connexion" });
-      }
+
+      setMessage({ type: "success", text: "Inscription réussie ! Redirection en cours..." });
+      setTimeout(() => navigate("/login"));
     } catch (error) {
-      console.error("Erreur lors de l'inscription du recruteur:", error);
       setMessage({
         type: "error",
         text: error.response?.data?.message || "Une erreur est survenue, veuillez réessayer.",
       });
     }
   };
+
   const inputFields = [
     { label: "Prénom", name: "firstName" },
     { label: "Nom", name: "lastName" },
@@ -101,39 +97,33 @@ const RegisterRecruiter = () => {
     { label: "Secteur d'activité", name: "entrepriseSecteur" },
   ];
 
-  const isFormValid = Object.values(formData).every((field) => field.trim() !== "");
+  const isFormValid = Object.values(formData).every((field) => field.trim() !== "") && logo;
 
   return (
-    <div className="register-form">
+    <div className="register-forme">
       <h2>Inscription Recruteur</h2>
       <form onSubmit={handleSubmit}>
         {inputFields.map(({ label, name, type = "text" }) => (
-          <div className="input-gr" key={name}>
+          <div className="input-group" key={name}>
             <label>{label}</label>
-            <input
-              type={type}
-              name={name}
-              value={formData[name]}
-              onChange={handleChange}
-              required
-            />
+            <input type={type} name={name} value={formData[name]} onChange={handleChange} required />
           </div>
         ))}
 
-        {message.text && <p className={`message ${message.type}`}>{message.text}</p>}
+        {/* Champ pour le logo */}
+        <div className="input-group">
+          <label>Logo de l'entreprise</label>
+          <input type="file" accept="image/*" onChange={handleFileChange} required />
+        </div>
 
-        <button className="submit-button-reg" type="submit" disabled={!isFormValid}>
+        {message.text && <p className={`message ${message.type}`}>{message.text}</p>}
+        <button className="submit-button" type="submit" disabled={!isFormValid}>
           Créer mon compte
         </button>
       </form>
-
-      <div className="container">
-        <span className="text">----- Vous avez déjà un compte ? -----</span>
-      </div>
-
-      <Link to="/login">
-        <button className="sign-up-Button">Se connecter</button>
-      </Link>
+      <p className="login-text">
+        Déjà un compte ? <Link to="/login" className="login-link">Se connecter</Link>
+      </p>
     </div>
   );
 };

@@ -1,88 +1,132 @@
-.talent-offers-container
-{
-width: 90%;
-margin-left: 70px;
-
+/* Style général */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #f4f7fc;
+  min-height: 100vh;
 }
-.offer-title-Talent {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1890ff; /* Ant Design primary color */
-    margin-bottom: 0.5rem;
-    transition: color 0.3s ease;
-  }
-  
-  .offer-title-Talent:hover {
-    color: #40a9ff;
-  }
-  
-  .offer-description-Talent {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 1rem;
-    color: #595959; 
-    margin-bottom: 0.5rem;
-  }
-  
 
-  .offer-date-Talent {
-    font-size: 0.875rem;
-    color: #8c8c8c;
-    margin-bottom: 1rem;
-  }
-  
-  
-  .offer-item-Talent {
+/* Conteneur principal */
+.offer-list-container {
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
 
-    border: 1px solid #e8e8e8; 
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    background: #ffffff; 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    transition: box-shadow 0.3s ease;
-    margin-left: 15px;
-  }
-  
-  .offer-item-Talent:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  }
-  
-  
-  .offer-actions-Talent {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: auto; 
-  }
-  
-  
-  .apply-button-Talent {
-    padding: 10px 20px;
-    border: 2px solid #4caf50; /* Ajouter une bordure rouge */
-    border-radius: 100px;
-    background-color: #ffffff;
-    color: #4caf50; /* Texte en noir */
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-  }
+/* Titre */
+.offer-list-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
 
+/* Barre de recherche */
+.search-container {
+  position: relative;
+  margin-bottom: 20px;
+}
 
-.offer-application-status {
-  
-  margin-top: 10px;
+.search-input {
+  width: 100%;
+  padding: 12px 15px 12px 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Icône de recherche */
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+}
+
+/* Liste des offres */
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Carte d'offre */
+.offer-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  border-left: 5px solid #007bff;
+}
+
+.offer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Titre de l'offre */
+.offer-title {
   font-size: 18px;
-  color: #333; /* Couleur du texte */
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
-.offer-application-status.success {
-  color: green; /* Couleur du texte pour une application réussie */
+.offer-title:hover {
+  color: #0056b3;
 }
 
-.offer-application-status.error {
-  color: red; /* Couleur du texte pour une application échouée */
+/* Description */
+.offer-description {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
 }
 
-  
+/* Détails de l'offre */
+.offer-details {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.offer-details svg {
+  margin-right: 8px;
+  color: #555;
+}
+
+/* Bouton de postulation */
+.apply-button {
+  width: 100%;
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.apply-button:hover {
+  background: #0056b3;
+}

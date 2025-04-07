@@ -1,0 +1,148 @@
+
+.dashboard-container {
+  padding: 20px;
+  background-color: #f8f9fd;
+  min-height: 100vh;
+}
+
+.dashboard-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.dashboard-section {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.see-all-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.see-all-btn:hover {
+  text-decoration: underline;
+}
+
+.applications-list,
+.jobs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.application-card,
+.job-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.application-card:hover,
+.job-card:hover {
+  transform: scale(1.02);
+}
+
+.company-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.application-details,
+.job-details {
+  flex-grow: 1;
+}
+.jobs-listing-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .job-listing-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .job-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      .company-name {
+        font-weight: 600;
+        color: #888;
+        font-size: 14px;
+      }
+
+      .job-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #222;
+      }
+
+      .job-tags {
+        display: flex;
+        gap: 10px;
+        margin: 6px 0;
+
+        .tag {
+          background-color: #f3f4f6;
+          padding: 6px 12px;
+          border-radius: 8px;
+          font-size: 13px;
+          font-weight: 500;
+        }
+      }
+
+      .job-location {
+        font-size: 14px;
+        color: #666;
+      }
+    }
+
+    .view-btn {
+      background-color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      font-weight: 600;
+      font-size: 14px;
+      transition: 0.2s ease;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+  }
+}

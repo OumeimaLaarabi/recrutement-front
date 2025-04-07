@@ -1,0 +1,94 @@
+.register-forme {
+    max-width: 500px;
+  margin: 20px auto;
+  padding: 40px;
+  border: 10px solid #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+
+  }
+  
+  .input-group {
+    margin-bottom: 10px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+
+  }
+  
+  .message {
+    text-align: center;
+    font-size: 14px;
+    margin: 10px 0;
+  }
+  
+  .message.success {
+    color: green;
+    font-family: Arial, sans-serif;
+
+  }
+  
+  .message.error {
+    color: red;
+    font-family: Arial, sans-serif;
+
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .submit-button:hover {
+    background: #0056b3;
+  }
+  
+  .submit-button:disabled {
+    background: gray;
+    cursor: not-allowed;
+  }
+  
+  .login-text {
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+  .login-link {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .login-link:hover {
+    text-decoration: underline;
+  }
+  

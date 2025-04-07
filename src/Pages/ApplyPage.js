@@ -80,11 +80,7 @@ const ApplyPage = () => {
         <form onSubmit={handleSubmit}>
           <label>
             Uploader votre CV (PDF ou Image) :
-            <input 
-              type="file"
-              accept="application/pdf, image/*"
-              onChange={handleCvChange}
-            />
+           <input type="file" name="cvFile" accept="application/pdf" onChange={handleCvChange} />
           </label>
 
           {cvFileName && (

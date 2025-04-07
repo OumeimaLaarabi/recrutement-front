@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { faInfoCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FaEdit } from "react-icons/fa";
-import { formatDate } from "../Utils/dateUtils";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Header } from "antd/es/layout/layout";
-import CustomHeader from "../Components/CustomHeader";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { getAllOffres } from "../Services/offreService";
+import { formatDate } from "../Utils/dateUtils";
+import "./offerLists.css"; // Import the CSS file
 
 function JobList() {
   const [offers, setOffers] = useState([]);
-  const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const [jobs, setJobs] = useState([]); 
-
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOffres = async () => {
+      try {
+        const data = await getAllOffres();
+        setOffers(data);
+      } catch (error) {
+        console.error("Error loading offers:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOffres();
+  }, []);
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
@@ -28,67 +34,62 @@ function JobList() {
       job.description.toLowerCase().includes(search.toLowerCase())
   );
 
-  useEffect(() => {
-     const fetchOffres = async () => {
-       try {
-         const data = await getAllOffres();
-         setJobs(data); // ✅ Stocker les offres récupérées
-       } catch (error) {
-         console.error("Erreur lors du chargement des offres:", error);
-       } finally {
-         setLoading(false);
-       }
-     };
-     fetchOffres();
-   }, []);
-
-  return (
-    <>
-      <Header className="header">
-        <CustomHeader />
-      </Header>
-      <div className="recruiter-offers-container">
-        <div className="headerRec">
-          <h1>Offers</h1>
-          <div className="search-container">
-            <FontAwesomeIcon
-              icon={faSearch}
-              className="search-icon"
-              style={{ color: isFocused ? "#4caf50" : "#ccc" }}
-            />
-            <input
-              type="text"
-              value={search}
-              onChange={handleSearch}
-              placeholder="Search for jobs"
-              className="search-bar-offer-list"
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-            />
-          </div>
-        </div>
-        <div className="offers-list">
-          {filteredOffers.map((offer) => (
-            <div key={offer.id} className="offer-item">
-              <div className="offer-content">
-                <h3 className="offer-title">{offer.title}</h3>
-                <p className="offer-description">{offer.description}</p>
-                <p className="offer-date">{formatDate(offer.createdDate)}</p>
-              </div>
-              <div className="offer-actions">
-                <Link
-                  to={`/offerDetails/${offer._id}`}
-                  style={{ textDecoration: "none", color: "green" }}
-                >
-                  <FontAwesomeIcon icon={faPaperPlane} />
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-        {error && <p className="error-message">{error}</p>}
-      </div>
-    </>
+  return React.createElement(
+    "div",
+    { className: "job-list-container" },
+    React.createElement(
+      "div",
+      { className: "header-section" },
+      React.createElement("h1", { className: "title" }, "Recommended Jobs"),
+      React.createElement(
+        "div",
+        { className: "search-container" },
+        React.createElement("input", {
+          type: "text",
+          value: search,
+          onChange: handleSearch,
+          placeholder: "Search for jobs...",
+          className: `search-bar ${isFocused ? "focused" : ""}`,
+          onFocus: () => setIsFocused(true),
+          onBlur: () => setIsFocused(false),
+        })
+      )
+    ),
+    React.createElement(
+      "div",
+      { className: "jobs-grid" },
+      loading
+        ? React.createElement("p", null, "Loading jobs...")
+        : filteredOffers.length > 0
+        ? filteredOffers.map((offer) =>
+            React.createElement(
+              "div",
+              { key: offer.id, className: "job-card" },
+              React.createElement(
+                "div",
+                { className: "job-header" },
+                React.createElement("span", { className: "job-date" }, formatDate(offer.createdDate))
+              ),
+              React.createElement(
+                "div",
+                { className: "job-content" },
+                React.createElement("h3", { className: "job-title" }, offer.title),
+                React.createElement("p", { className: "job-description" }, offer.description)
+              ),
+              React.createElement(
+                "div",
+                { className: "job-footer" },
+                React.createElement("span", { className: "job-price" }, `$${offer.salary}/hr`),
+                React.createElement(
+                  Link,
+                  { to: `/offerDetails/${offer._id}`, className: "details-btn" },
+                  "Details"
+                )
+              )
+            )
+          )
+        : React.createElement("p", null, "No job offers found.")
+    )
   );
 }
 

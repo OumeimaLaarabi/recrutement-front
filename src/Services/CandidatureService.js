@@ -16,30 +16,63 @@ export const getApplicationsByCandidate = async (candidatId) => {
 };
   
  
-  
-  // Fetch applications by recruiter
+
+
   export const getApplicationsByRecruiter = async (recruteurId) => {
     try {
-      const token = JSON.parse(localStorage.getItem('user'))?.token;  // Get token from localStorage
+      const user = JSON.parse(localStorage.getItem("user")); // Retrieve the user from localStorage
   
-      if (!token) {
-        throw new Error("No token found. Please log in.");
+      if (!user || !user.token) {
+        throw new Error("Utilisateur non authentifié.");
       }
   
-      // Set the Authorization header with the token
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${user.token}`, // Attach the JWT token to the request headers
         },
       };
   
+      // Make sure the URL is correctly set up
       const response = await axios.get(`${BASE_URL}/candidatures/recruteur/${recruteurId}`, config);
-      return response.data;
+      
+      // Check if response data exists
+      if (!response || !response.data) {
+        throw new Error("No candidatures found for this recruiter.");
+      }
+  
+      return response.data; // Return the data from the response
+  
     } catch (error) {
       console.error("Error fetching applications by recruiter:", error);
-      throw error.response?.data?.message || "Unauthorized or error connecting to the server";
+      // Return more detailed error messages
+      throw error.response?.data?.message || error.message || "Unauthorized or error connecting to the server";
     }
-  };export const updateCandidatureStatus = async (id, statuts, offerId, talentId) => {
+  };
+  export const deleteCandidatureById = async (id) => {
+    try {  // Get token from localStorage
+      const token = JSON.parse(localStorage.getItem('user'))?.token;
+      
+      if (!token) {
+        throw new Error("No authentication token found. Please log in.");
+      }
+  
+      console.log(`📩 Sending update for application ${id}`);
+
+      const response = await axios.delete(`${apiUrl}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log("Candidature supprimée avec succès :", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Erreur lors de la suppression de la candidature :", error);
+      throw error;
+    }
+  };
+
+  export const updateCandidatureStatus = async (id, statuts, offerId, talentId) => {
     try {
       // Get token from localStorage
       const token = JSON.parse(localStorage.getItem('user'))?.token;

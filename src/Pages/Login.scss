@@ -1,0 +1,112 @@
+// Login.scss
+$primary-color: #4a90e2;
+$secondary-color: #f0f0f0;
+$text-color: #333;
+$error-color: #d9534f;
+
+.login-container {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+    font-family: Arial, sans-serif;
+  font-style: bold;
+  .login-card {
+    display: flex;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 50px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    width: 450px;
+    flex-direction: column;
+
+   
+    
+    .login-form {
+      padding: 20px;
+      text-align: center;
+
+      .login-title {
+        color: $primary-color;
+        margin-bottom: 10px;
+
+      }
+
+      p {
+        color: $text-color;
+        font-size: 16px;
+      }
+
+      .input-group {
+        display: flex;
+        align-items: center;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px 0;
+        .input-icon {
+          width: 20px;
+          margin-right: 10px;
+        }
+
+        input {
+          flex: 1;
+          border: none;
+          outline: none;
+          font-size: 16px;
+
+        }
+
+        .toggle-icon {
+          width: 20px;
+          cursor: pointer;
+        }
+      }
+
+      .error-message {
+        color: $error-color;
+        font-size: 19px;
+        margin: 5px 0;
+      }
+
+      .forgot-password {
+        text-align: center;
+        margin: 10px 0;
+
+        a {
+          color: $primary-color;
+          text-decoration: none;
+          font-size: 19px;
+        }
+      }
+
+      .login-button {
+        width: 100%;
+        padding: 10px;
+        background: $primary-color;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+          background: darken($primary-color, 10%);
+        }
+      }
+
+      .signup-text {
+        margin-top: 10px;
+        font-size: 14px;
+
+        a {
+          color: $primary-color;
+          text-decoration: none;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Navbar.css";
-import logo from "../Images/logo.png";
+import "../scss/navbar.scss";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { useUserContext } from "../Contexts/AuthContext";
@@ -19,9 +18,7 @@ const Navbar = () => {
     <div>
       <nav className="navbar-container" style={backgroundStyle}>
         <div className="nav-content">
-          <div className={"logo-container"}>
-            <img className="logoNavbar" src={logo} alt="" />
-          </div>
+        
           <ul>
             {!user && (
               <li>
@@ -65,7 +62,7 @@ const Navbar = () => {
             )}
             {!user && (
               <li>
-                <Link style={{ textDecoration: "none" }} to="/JobList">
+                <Link style={{ textDecoration: "none" }} to="/offers">
                   <a className="menu-item">Jobs </a>
                 </Link>
               </li>

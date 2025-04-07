@@ -28,6 +28,8 @@ import OfferDetails from "./Pages/OffreDetails";
 import JobList from "./Pages/JobList";
 import Offers from "./Pages/Offers";
 import TalentProfile from "./Pages/TalentProfile";
+import TalentOfferList from "./Pages/TalentOfferList";
+import DashboradTalent from "./Pages/DashboradTalent"
 const { Sider, Content } = Layout;
 
 function App() {
@@ -71,10 +73,11 @@ function App() {
             <Content className="content">
               <Routes>
               <Route path="/" element={<Home />} />
-                <Route path="/HomeTalent" element={<HomeTalent />} />
+                <Route path="/HomeTalent" element={<DashboradTalent/>} />
                 <Route path="/HomeRecruiter" element={<HomeRecruiter />} />
                 <Route path="/HomeAdmin" element={<HomeAdmin />} />
                 <Route path="/candidat/:id" element={<TalentProfile candidatId={user.id}/>} />
+                <Route path="/Offers" element={<Offers />} />
 
                 {/* Routes for Talent Application */}
                 <Route path="/TalentApplication" element={<TalentApplication />} />
@@ -87,6 +90,7 @@ function App() {
                 <Route path="/offres/edit/:id" element={<UpdateOffre />} />
                 <Route path="/apply/:id" element={<ApplyPage />} />
                 <Route path="/OfferDetails/:id" element={<OfferDetails />} />
+                <Route path="/TalentOfferList" element={<TalentOfferList/>} />
               </Routes>
             </Content>
           </Layout>
@@ -102,7 +106,7 @@ function App() {
             <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/RegisterTalent" element={<RegisterTalent />} />
             <Route path="/RegisterRecruiter" element={<RegisterRecruiter />} />
-            <Route path="/JobList" element={<Offers/>} />
+            <Route path="/offers" element={<Offers/>} />
           </Routes>
         </>
       )}

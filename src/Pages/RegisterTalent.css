@@ -1,88 +1,120 @@
 .register-form {
-  max-width: 400px;
-  margin: 10px auto;
-  padding: 20px;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 30px;
   border: 1px solid #f0f0f0;
   border-radius: 10px;
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
 }
 
 .register-form h2 {
   text-align: center;
-  font-family: "Inika";
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
+/* Groupe d'entrée */
 .input-gr {
   position: relative;
   margin-bottom: 15px;
 }
 
 .input-gr input {
-  width: 90%;
-  padding: 10px 10px 10px 10px; /* Adjust left padding to accommodate image */
+  width: 100%;
+  padding: 10px;
   border: 1px solid #f0f0f0;
   border-radius: 4px;
-}
-.input-gr input:focus {
-  outline: none;
+  font-size: 10px;
+  
 }
 
-.submit-button-reg {
-  width: 70%;
-  padding: 10px;
+.input-gr input:focus {
+  outline: none;
+  border-color: #4caf4f;
+}
+
+/* Aligner deux champs sur une ligne */
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 35px; /* Espace entre les champs */
+  margin-bottom: 15px;
+}
+
+.input-gr.half {
+  width: 48%; /* Ajuste la largeur pour qu’ils restent sur la même ligne */
+  font-family: Arial, sans-serif;
+
+}
+
+/* Style du bouton */
+.submit-buttons-reg {
+  padding: 120px;
   cursor: pointer;
-  background-color: #4caf4f;
+  background-color: #274f28;
   border-radius: 10px;
   color: white;
   border: none;
-  cursor: pointer;
-  margin-left: 55px;
-  margin-top: 20px;
+  font-size: 16px;
+  display: block;
+  margin: 20px auto;
 }
 
+.submit-buttons-reg:hover {
+  background-color: #45a049;
+}
+
+/* Texte et bouton d'inscription */
 .container {
-  display: "flex";
-  text-align: center;
-  margin-top: 20px;
-  font-family: "Inter";
+  text-align: left;
+  margin-top: 1px;
 }
 
 .text {
-  margin: 0 20px;
-  margin-top: 30px;
-  font-family: DM Sans;
+  font-size: 18px;
   color: #717171;
+  font-family: Arial, sans-serif;
+
+}
+ 
+.login-text {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
-.sign-up-Button {
-  width: 70%;
-  padding: 10px;
-  cursor: pointer;
-  background-color: white;
-  border-radius: 15px;
-  color: #4caf4f;
-  border: 2px solid #4caf4f;
-  cursor: pointer;
-  margin-left: 90px;
-  margin-top: 30px;
+.sign-link {
+  color: #007bff;         /* Blue link color */
+  text-decoration: none;  /* Remove underline */
+  font-weight: bold;
+  
 }
 
+.sign-link:hover {
+  text-decoration: underline; /* Underline on hover for clarity */
+}
+
+
+/* Icône de visibilité du mot de passe */
 .toggle-iconn {
   position: absolute;
-  right: 25px;
-  top: 65%;
+  right: 5px;
+  top: 70%;
   transform: translateY(-50%);
   width: 20px;
   height: auto;
   cursor: pointer;
 }
 
-.input-row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 40px;
-}
+/* Responsive design pour petits écrans */
+@media (max-width: 200px) {
+  .input-row {
+    flex-direction: column;
+  }
 
-.input-gr.half {
-  width: 48%; /* Adjust the width as necessary */
+  .input-gr.half {
+    width: 100%;
+  }
 }

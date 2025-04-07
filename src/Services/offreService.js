@@ -64,13 +64,12 @@ export const getOffresbyRecruiter = async (id) => {
     throw error.response?.data?.message || "Erreur de connexion au serveur";
   }
 };
-export const applyOffre = async (candidatId, offreId, cvFile) => {
+export const applyOffre = async (candidatId, offreId, cv) => {
   try {
     const formData = new FormData();
     formData.append("candidatId", candidatId);
     formData.append("offreId", offreId);
-    formData.append("cv", cvFile);
-
+    formData.append("cvFile", cv);  // Change 'cv' to 'cvFile'
     const response = await axios.post(`${apiUrl}/apply`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -83,4 +82,29 @@ export const applyOffre = async (candidatId, offreId, cvFile) => {
     throw error.response?.data?.message || "Erreur de connexion au serveur";
   }
 };
+// 🔍 Recherche avancée d'offres par titre, type_offre, date
+export const searchOffres = async (filters = {}) => {
+  try {
+    const params = new URLSearchParams();
 
+    if (filters.titre) params.append("titre", filters.titre);
+    if (filters.type_offre) params.append("type_offre", filters.type_offre);
+    if (filters.date) params.append("date", filters.date);
+
+    const response = await axios.get(`${apiUrl}/search`, { params });
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la recherche des offres :", error);
+    throw error.response?.data?.message || "Erreur de connexion au serveur";
+  }
+};
+// ✅ Récupérer toutes les offres avec le nombre de candidats appliqués
+export const getAllOffresWithCandidatureCount = async () => {
+  try {
+    const response = await axios.get(`${apiUrl}/with-candidatures`);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des offres avec candidats:", error);
+    throw error.response?.data?.message || "Erreur de connexion au serveur";
+  }
+};
