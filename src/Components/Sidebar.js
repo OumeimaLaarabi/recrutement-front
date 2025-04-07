@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Menu, Avatar, Badge, Typography } from "antd";
+import React from "react";
+import { Menu, Avatar, Badge } from "antd";
 import {
   UserOutlined,
   ProfileOutlined,
@@ -11,8 +11,6 @@ import {
 import { Link } from "react-router-dom";
 import { useUserContext } from "../Contexts/AuthContext";
 import "./Sidebar.css";
-
-const { Title } = Typography;
 
 const Sidebar = ({ collapsed }) => {
   const { user, handleLogout } = useUserContext();
@@ -31,7 +29,7 @@ const Sidebar = ({ collapsed }) => {
   };
 
   return (
-    <div className="sidebar-wrapper">
+    <div className={`sidebar-wrapper ${collapsed ? "collapsed" : ""}`}>
       {!collapsed && user && (
         <div className="user-info-wrapper">
           <div className="user-info">
@@ -72,12 +70,14 @@ const Sidebar = ({ collapsed }) => {
               <Link to="/recruiter-applications">Applications</Link>
             )}
           </Menu.Item>
+
           <Menu.Item key="3" icon={<OrderedListOutlined />}>
-            {user.role === "candidat" ? (
-              <Link to="/Offers">Jobs</Link>
-            ) : (
-              <Link to="/Offers">Jobs</Link>
+          {user.role === "candidat" ? (
+         <Link to="/TalentOfferList">Jobs</Link>            
+          ) : (
+              <Link to="/TalentOfferList">Jobs</Link>
             )}
+           
           </Menu.Item>
 
           <Menu.Item key="4" icon={<ProfileOutlined />}>

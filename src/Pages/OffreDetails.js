@@ -142,7 +142,7 @@ const OfferDetails = () => {
                             Cancel
                         </button>
                         <button
-  className="apply-button-Talent"
+  className="apply-button"
   onClick={() => handleApply(offerDetails._id)}
 >
   Postuler

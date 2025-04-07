@@ -22,8 +22,8 @@ const TalentApplication = () => {
         console.log("Applications fetched:", response);
         setApplications(response);
       } catch (error) {
-        console.error("Failed to fetch applications:", error);
-        setError("Failed to fetch applications");
+        console.error("Aucune candidature trouvée:", error);
+        setError("No applications found for this offer.");
       }
     };
   
@@ -55,17 +55,11 @@ const TalentApplication = () => {
         renderItem={(application) => (
           <List.Item key={application._id}>
             <Card
-              className="application-card"
+              className="applications-card"
               title={<Text strong>{application.offre ? application.offre.title : "No Offer"}</Text>}
               bordered={false}
-              hoverable
-              style={{
-                borderRadius: 10,
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-                transition: "transform 0.2s",
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
-              onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+              
+           
             >
               <div className="status-container">
                 <span className={`status-icon ${application.statuts === "ACCEPTED" ? "green" : "red"}`}>

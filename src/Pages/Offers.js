@@ -121,7 +121,7 @@ const OffreList = () => {
   )}
   <h2 className="jobs-title">{job.title}</h2>
 </div>              <div className="jobs-details">
-                <span className="jobs-salary">${job.salaire}/hr</span>
+                <span className="jobs-salary">TND{job.salaire}/hr</span>
                 <span className="jobs-location">{job.adresse}</span>
               </div>
               <div>

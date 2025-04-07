@@ -38,8 +38,9 @@ const TalentDashboard = () => {
     const fetchJobs = async () => {
       try {
         const data = await getAllOffres();
-        setJobs(data);
-      } catch (error) {
+        const sortedJobs = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setJobs(sortedJobs);
+            } catch (error) {
         setError("Failed to load job listings.");
       } finally {
         setLoading(false);
@@ -79,6 +80,7 @@ const TalentDashboard = () => {
                 {/* Vérifier si l'offre existe avant d'afficher les données */}
                 {app.offre ? (
                   <div className="application-details">
+                  
                     <h4>{app.offre.title}</h4>
                     <p>{app.offre.adresse || "Adresse non spécifiée"}</p>
                     <p className="salary">💰 {app.offre.salaire ? `${app.offre.salaire} TND` : "Non précisé"}</p>
@@ -107,20 +109,37 @@ const TalentDashboard = () => {
         </div>
         <div className="jobs-listing-section">
   {jobs.length > 0 ? (
-    jobs.slice(0, 4).map((job) => (
+    jobs.slice(0, 3).map((job) => (
       <div key={job._id} className="job-listing-card">
-        <div className="job-info">
-          <h4 className="company-name">{job.id_recruteur?.entreprise?.nom || "Entreprise"}</h4>
-          <h3 className="job-title">{job.title}</h3>
+       <div className="job-info">
 
-          <div className="job-tags">
-            <span className="tag">{job.type_offre || "Full Time"}</span>
-            <span className="tag">{job.salaire ? `${job.salaire} TND` : "Salaire non précisé"}</span>
- 
-          </div>
+<div className="jobs-header">
+  {/* Logo entreprise */}
+  {job.id_recruteur?.entreprise?.logo && (
+    <img
+      src={job.id_recruteur.entreprise.logo || '/default-logo.png'}
+      alt="Logo entreprise"
+      className="company-logo"
+    />
+  )}
 
-          <p className="job-location">📍 {job.adresse || "Lieu non spécifié"}</p>
-          {(() => {
+  {/* Titre du job */}
+  <div className="job-title-wrapper">
+    <h4 className="company-name">{job.id_recruteur?.entreprise?.nom || "Entreprise"}</h4>
+    <h3 className="job-title">{job.title}</h3>
+  </div>
+</div>
+
+{/* Tags */}
+<div className="job-tags">
+  <span className="tag">{job.type_offre || "Full Time"}</span>
+  <span className="tag">{job.salaire ? `${job.salaire} TND` : "Salaire non précisé"}</span>
+</div>
+
+<p className="job-location">📍 {job.adresse || "Lieu non spécifié"}</p>
+
+{/* Nombre de candidats */}
+{(() => {
   const offreMatch = candidature.find((c) => c._id === job.offre);
   return (
     <p className="applicants-count">
@@ -128,7 +147,7 @@ const TalentDashboard = () => {
     </p>
   );
 })()}
-        </div>
+</div>
 
         <button className="view-btn" onClick={() => navigate(`/OfferDetails/${job._id}`)}>
           View

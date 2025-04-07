@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faBriefcase, faCalendar } from "@fortawesome/free-solid-svg-icons";
-import { Layout, Spin } from "antd";
+import { faSearch, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { Spin } from "antd";
 import CustomHeader from "../Components/CustomHeader";
 import { getAllOffres } from "../Services/offreService";
 import { useUserContext } from "../Contexts/AuthContext";
 import Toast from "../Components/Toast";
-import "./TalentOffersList.css"
+import "./TalentOffersList.css";
+
 const TalentOfferList = () => {
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [sortOrder, setSortOrder] = useState("recent");
   const { user } = useUserContext();
   const navigate = useNavigate();
 
@@ -29,96 +31,116 @@ const TalentOfferList = () => {
     fetchOffres();
   }, []);
 
-  const handleSearch = (event) => {
-    setSearch(event.target.value);
-  };
+  const handleSearch = (e) => setSearch(e.target.value);
 
-  const applyOffre = (offerId) => {
+  const filteredJobs = jobs
+    .filter(
+      (job) =>
+        job.title?.toLowerCase().includes(search.toLowerCase()) ||
+        job.description?.toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) =>
+      sortOrder === "recent"
+        ? new Date(b.date_creation) - new Date(a.date_creation)
+        : new Date(a.date_creation) - new Date(b.date_creation)
+    );
+
+  const applyOffre = (id) => {
     if (!user || !user.id) {
-      console.error("L'utilisateur n'est pas connecté.");
+      console.error("Utilisateur non connecté");
       return;
     }
-    navigate(`/apply/${offerId}`);
+    navigate(`/apply/${id}`);
   };
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("fr-FR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const filteredOffers = jobs.filter((offer) =>
-    offer.title.toLowerCase().includes(search.toLowerCase())
-  );
 
   return (
-    <>
-      <Layout.Header>
-        <CustomHeader />
-      </Layout.Header>
-      <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
-        <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-            🔎 Offres d'emploi disponibles
-          </h1>
+    <div className="talent-page">
+      <CustomHeader />
+      <div className="search-bar-container">
+        <input
+          type="text"
+          placeholder="Search UX Designer..."
+          value={search}
+          onChange={handleSearch}
+          className="search-input-large"
+        />
+        <button className="search-btn-red">Search</button>
+      </div>
 
-          {/* Barre de recherche */}
-          <div className="relative mb-6">
-            <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-3 text-gray-500" />
-            <input
-              type="text"
-              value={search}
-              onChange={handleSearch}
-              placeholder="Rechercher des offres..."
-              className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+      <div className="results-header">
+        <h2>Showing {filteredJobs.length} results</h2>
+        <div className="sort-wrapper">
+  <span className="sort-label">Sort by:</span>
+  <select
+    className="sort-select"
+    value={sortOrder}
+    onChange={(e) => setSortOrder(e.target.value)}
+  >
+    <option value="recent">Newest Post</option>
+    <option value="older">Oldest Post</option>
+  </select>
+</div>
+      </div>
 
-          {loading ? (
-            <div className="flex justify-center py-10">
-              <Spin size="large" />
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {filteredOffers.length > 0 ? (
-                filteredOffers.map((offer) => (
-                  <div
-                    key={offer.id}
-                    className="bg-white p-5 rounded-lg shadow-md hover:shadow-lg transition duration-300"
-                  >
-                    <Link to={`/OfferDetails/${offer._id}`}>
-                      <h3 className="text-xl font-semibold text-blue-600 hover:underline">
-                        {offer.title}
-                      </h3>
-                    </Link>
-                    <p className="text-gray-600 mt-2">{offer.description}</p>
-                    <div className="flex items-center mt-4 text-gray-500">
-                      <FontAwesomeIcon icon={faBriefcase} className="mr-2" />
-                      <span>{offer.company || "Entreprise non spécifiée"}</span>
-                    </div>
-                    <div className="flex items-center mt-2 text-gray-500">
-                      <FontAwesomeIcon icon={faCalendar} className="mr-2" />
-                      <span>{formatDate(offer.date_creation)}</span>
-                    </div>
-                    <button
-                      className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg transition duration-300"
-                      onClick={() => applyOffre(offer._id)}
-                    >
-                      📩 Postuler
-                    </button>
+      {loading ? (
+        <div className="loader">
+          <Spin size="large" />
+        </div>
+      ) : (
+        <div className="job-cards-wrapper">
+          {filteredJobs.length > 0 ? (
+            filteredJobs.map((job) => (
+              <div key={job._id} className="job-card-modern">
+                <div className="job-header">
+                  {job.id_recruteur?.entreprise?.logo && (
+                    <img
+                      src={job.id_recruteur.entreprise.logo}
+                      alt="Logo"
+                      className="company-logo-square"
+                    />
+                  )}
+                  <div className="job-header-text">
+                    <h3 className="job-title">{job.title}</h3>
+                    <p className="company-name">{job.id_recruteur?.entreprise?.nom}</p>
+                    <p className="job-location">
+                      <FontAwesomeIcon icon={faMapMarkerAlt} className="icon" />
+                      {job.adresse || "Location not specified"}
+                    </p>
                   </div>
-                ))
-              ) : (
-                <p className="text-gray-500 text-center">Aucune offre ne correspond à votre recherche.</p>
-              )}
-            </div>
+                  <div className="salary">
+                  TND{job.salaire}/hr
+                  </div>
+                </div>
+
+                <p className="job-desc">
+                  {job.description?.length > 100
+                    ? job.description.substring(0, 100) + "..."
+                    : job.description}
+                </p>
+
+                <div className="tags">
+                  {(job.requirements || []).slice(0, 4).map((tag, idx) => (
+                    <span key={idx} className="tag">{tag}</span>
+                  ))}
+                </div>
+
+                <div className="footer-row">
+                  <p className="posted-date">
+                    {new Date(job.date_creation).toLocaleDateString()}
+                  </p>
+                  <button className="apply-btn" onClick={() => applyOffre(job._id)}>
+                    Apply Now
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="no-results">No jobs match your search.</p>
           )}
         </div>
-      </div>
+      )}
       <Toast />
-    </>
+    </div>
   );
 };
 

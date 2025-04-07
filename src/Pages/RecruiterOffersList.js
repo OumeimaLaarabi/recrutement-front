@@ -25,6 +25,7 @@ function RecruiterOffersList() {
 
   const handleSearch = (event) => setSearch(event.target.value);
 
+  // Logique de filtrage des offres
   const filteredOffers = Jobs.filter((job) => {
     const isTypeMatch = filteredType ? job.type_offre.toLowerCase() === filteredType.toLowerCase() : true;
     const isDateMatch = filteredDate
@@ -116,8 +117,6 @@ function RecruiterOffersList() {
                 onBlur={() => setIsFocused(false)}
               />
             </div>
-            
-            
           </div>
 
           {/* Filter Section - Updated Design */}
@@ -172,7 +171,7 @@ function RecruiterOffersList() {
                     checked={filteredDate === "older"}
                     onChange={() => setFilteredDate(filteredDate === "older" ? null : "older")}
                   />
-                  <span>Anciennes</span>
+                  <span>older</span>
                 </label>
               </div>
             </div>

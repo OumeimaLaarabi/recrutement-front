@@ -102,8 +102,8 @@ const RecruiterApplications = () => {
               <td className="border p-2">{c.offreTitle || "N/A"}</td>
               <td className="border p-2">{c.candidatName || "N/A"}</td>
               <td className="border p-2">
-                <a href={c.cv} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
-                  Voir CV
+              <a href={c.cv} download className="text-blue-500 underline">
+              Voir CV
                 </a>
               </td>
               <td className="border p-2">{formatScoreAsPercentage(c.score)}</td>

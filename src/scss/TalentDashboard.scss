@@ -96,17 +96,42 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+      flex: 1;
 
-      .company-name {
-        font-weight: 600;
-        color: #888;
-        font-size: 14px;
-      }
+      // Nouvelle section pour logo + titre
+      .jobs-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
 
-      .job-title {
-        font-size: 18px;
-        font-weight: 700;
-        color: #222;
+        .company-logo {
+          width: 40px;
+          height: 40px;
+          object-fit: contain;
+          border-radius: 8px;
+          flex-shrink: 0; // évite que le logo se réduise
+
+        }
+
+        .job-title-wrapper {
+          display: flex;
+          flex-direction: column;
+          justify-content: center; // centre le nom et titre par rapport au logo
+          gap: 4px;
+
+
+          .company-name {
+            font-weight: 600;
+            color: #888;
+            font-size: 14px;
+          }
+
+          .job-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #222;
+          }
+        }
       }
 
       .job-tags {
@@ -126,6 +151,11 @@
       .job-location {
         font-size: 14px;
         color: #666;
+      }
+
+      .applicants-count {
+        font-size: 13px;
+        color: #444;
       }
     }
 

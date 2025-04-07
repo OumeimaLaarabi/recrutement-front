@@ -1,132 +1,208 @@
-/* Style général */
-.page-container {
+.talent-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.search-bar-container {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+}
+
+.search-input-large {
+  flex: 1;
+  padding: 14px 18px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.search-btn-red {
+  background-color: #ef4444;
+  color: white;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.results-header h2 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280; /* Tailwind's gray-500 */
+  margin: 0;
+}
+.job-cards-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  background-color: #f4f7fc;
-  min-height: 100vh;
-}
-
-/* Conteneur principal */
-.offer-list-container {
-  width: 100%;
-  max-width: 900px;
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 20px;
-  text-align: center;
-}
-
-/* Titre */
-.offer-list-title {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-/* Barre de recherche */
-.search-container {
-  position: relative;
-  margin-bottom: 20px;
-}
-
-.search-input {
-  width: 100%;
-  padding: 12px 15px 12px 40px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 0.3s ease-in-out;
-}
-
-.search-input:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-/* Icône de recherche */
-.search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #777;
-}
-
-/* Liste des offres */
-.offer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
+  min-height: 500px; /* <-- empêche le container de "disparaître" */
+
+
+}
+.no-results {
+  text-align: center;
+  color: #9ca3af;
+  margin-top: 100px;
+  font-size: 18px;
+  min-height: 500px; /* <-- empêche le container de "disparaître" */
+
 }
 
-/* Carte d'offre */
-.offer-card {
-  background: #ffffff;
+.job-card-modern {
+  background-color: white;
+  border-radius: 12px;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease-in-out;
-  border-left: 5px solid #007bff;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s ease;
 }
 
-.offer-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+.job-card-modern:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* Titre de l'offre */
-.offer-title {
+.job-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.company-logo-square {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.job-header-text {
+  flex: 1;
+  
+}
+
+.job-title {
   font-size: 18px;
   font-weight: bold;
-  color: #007bff;
-  margin-bottom: 10px;
-  cursor: pointer;
-  transition: color 0.3s;
+  margin: 0;
 }
 
-.offer-title:hover {
-  color: #0056b3;
-}
-
-/* Description */
-.offer-description {
+.company-name {
+  color: #6b7280;
   font-size: 14px;
-  color: #555;
-  margin-bottom: 10px;
+  margin-top: 2px;
 }
 
-/* Détails de l'offre */
-.offer-details {
+.job-location {
+  font-size: 14px;
+  color: #9ca3af;
   display: flex;
   align-items: center;
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 5px;
+  gap: 6px;
+  margin-top: 4px;
 }
 
-.offer-details svg {
-  margin-right: 8px;
-  color: #555;
-}
-
-/* Bouton de postulation */
-.apply-button {
-  width: 100%;
-  background: #007bff;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
+.salary {
+  font-weight: normal;
   font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s;
+  color: #666666;
+  white-space: nowrap;
 }
 
-.apply-button:hover {
-  background: #0056b3;
+.job-desc {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #444;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.tag {
+  background-color: #f3f4f6;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  color: #374151;
+}
+
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.posted-date {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.apply-btn {
+  padding: 10px 20px;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  padding: 80px 0;
+}
+
+.no-results {
+  text-align: center;
+  color: #9ca3af;
+  margin-top: 60px;
+}
+.sort-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #6b7280; /* gray-500 */
+  margin-bottom: 20px;
+}
+
+.sort-label {
+  font-weight: 500;
+}
+
+.sort-select {
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827; /* gray-900 */
+  cursor: pointer;
+  padding-right: 20px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg fill='none' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%236B7280' stroke-width='2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1rem;
+}
+
+.sort-select:focus {
+  outline: none;
 }
