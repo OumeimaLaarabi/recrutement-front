@@ -107,7 +107,7 @@ const ApplyPage = () => {
             </div>
           )}
 
-          <button type="submit">Envoyer la candidature</button>
+          <button type="submits">Envoyer la candidature</button>
         </form>
 
         {error && <div className="error-message">{error}</div>}

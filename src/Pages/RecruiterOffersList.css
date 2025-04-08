@@ -114,18 +114,19 @@
   padding: 10px 20px;
   background-color: #1890ff;
   color: white;
-  border-radius: 5px;
+  border-radius: 50px;
   text-decoration: none;
   margin-top: 15px;
+  margin-bottom: 30px; /* Ajout d'un espace entre le bouton et la table */
   transition: background-color 0.3s;
+  margin-right: auto; /* Alignement du bouton à droite */
 }
 
 .create-offer-link:hover {
   background-color: #40a9ff;
 }
 
-
-
+/* Tableau des offres */
 .offers-table {
   width: 100%;
   border-collapse: collapse;
@@ -133,7 +134,9 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  margin-top: 30px; /* Ajout d'un espacement entre le bouton et la table */
 }
+
 
 .offers-table th,
 .offers-table td {
@@ -152,7 +155,18 @@
 .offers-table tr:hover {
   background-color: #f0f9ff;
 }
+/* Badge de type d'offre */
+.badge {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+  display: inline-block;
+}
 
+
+
+/* Icônes des actions */
 .action-icon {
   cursor: pointer;
   margin-right: 10px;
@@ -171,7 +185,6 @@
 .action-icon:hover {
   transform: scale(1.2);
 }
-
 .filters {
   display: flex;
   gap: 10px;

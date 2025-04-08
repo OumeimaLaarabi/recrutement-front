@@ -139,9 +139,10 @@ const TalentProfile = () => {
           </div>
           
           <div className="form-actions">
-            <button type="submit">Save Changes</button>
-            <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
-          </div>
+  <button type="submit" className="btn-save">Save Changes</button>
+  <button type="button" className="btn-cancel" onClick={() => setIsEditing(false)}>Cancel</button>
+</div>
+
         </form>
       ) : (
         <div className="profile-details">
@@ -171,9 +172,9 @@ const TalentProfile = () => {
       )}
       
       {!isEditing && (
-          <div className="action-buttons">
-            <button onClick={() => setIsEditing(true)}>Edit Profile</button>
-          </div>
+       <div className="actions-buttons">
+       <button className="btn-edit" onClick={() => setIsEditing(true)}>Edit Profile</button>
+     </div>
         )}
     </div>
   );

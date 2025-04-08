@@ -111,18 +111,20 @@
   
   .jobs-title {
     font-size: 18px;
-    font-weight: bold;
+    font-weight: normal;
     margin: 10px 0;
     font-family: Arial, sans-serif;
+    margin-bottom: 18px; /* Space below job details */
+
   }
   
   .jobs-details {
     display: flex;
     justify-content: space-between;
-    font-size: 19px;
+    font-size: 14px;
     font-family: Arial, sans-serif;
-    font-weight: bold;
-    margin-bottom: 10px; /* Space below job details */
+    font-weight: normal;
+    margin-bottom: 15px; /* Space below job details */
   }
   
   .jobs-description {

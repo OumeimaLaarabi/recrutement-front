@@ -5,41 +5,23 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { formatDate } from "../Utils/dateUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { Layout, Tag, message, Badge } from "antd";
+import { Layout, Tag, message } from "antd";
 import CustomHeader from "../Components/CustomHeader";
 import { useUserContext } from "../Contexts/AuthContext";
 import "./RecruiterOffersList.css";
 
 const { Header } = Layout;
-
 function RecruiterOffersList() {
   const [Jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const [filteredType, setFilteredType] = useState(null);
-  const [filteredDate, setFilteredDate] = useState(null);
+  const [sortOrder, setSortOrder] = useState("recent");
+  const [filterType, setFilterType] = useState("all");
+
   const { user } = useUserContext();
   const navigate = useNavigate();
-
-  const handleSearch = (event) => setSearch(event.target.value);
-
-  // Logique de filtrage des offres
-  const filteredOffers = Jobs.filter((job) => {
-    const isTypeMatch = filteredType ? job.type_offre.toLowerCase() === filteredType.toLowerCase() : true;
-    const isDateMatch = filteredDate
-      ? filteredDate === "recent"
-        ? new Date(job.date_creation) >= new Date() - 30 * 24 * 60 * 60 * 1000
-        : new Date(job.date_creation) < new Date() - 30 * 24 * 60 * 60 * 1000
-      : true;
-    return (
-      (job.title.toLowerCase().includes(search.toLowerCase()) ||
-        job.description.toLowerCase().includes(search.toLowerCase())) &&
-      isTypeMatch &&
-      isDateMatch
-    );
-  });
 
   useEffect(() => {
     const fetchOffres = async () => {
@@ -62,6 +44,8 @@ function RecruiterOffersList() {
     fetchOffres();
   }, [user]);
 
+  const handleSearch = (event) => setSearch(event.target.value);
+
   const handleDelete = async (id) => {
     if (window.confirm("Voulez-vous vraiment supprimer cette offre ?")) {
       try {
@@ -75,6 +59,14 @@ function RecruiterOffersList() {
   };
 
   const handleUpdate = (id) => navigate(`/offres/edit/${id}`);
+
+  const handleSort = () => {
+    setSortOrder(sortOrder === "recent" ? "older" : "recent");
+  };
+
+  const handleFilterChange = (type) => {
+    setFilterType(type.toLowerCase());
+  };
 
   const getBadgeColor = (type) => {
     if (!type || typeof type !== "string") return "gray";
@@ -90,139 +82,105 @@ function RecruiterOffersList() {
     }
   };
 
+  const filteredOffers = Jobs
+    .filter(
+      (job) =>
+        job.title?.toLowerCase().includes(search.toLowerCase()) ||
+        job.description?.toLowerCase().includes(search.toLowerCase())
+    )
+    .filter(
+      (job) => filterType === "all" || job.type_offre?.toLowerCase() === filterType
+    )
+    .sort((a, b) =>
+      sortOrder === "recent"
+        ? new Date(b.date_creation) - new Date(a.date_creation)
+        : new Date(a.date_creation) - new Date(b.date_creation)
+    );
+
   return (
     <>
       <Header className="header">
         <CustomHeader />
       </Header>
       <div className="recruiter-offers-container">
-        <div className="headerRec">
-          <h1>Mes Offres</h1>
-          
-          {/* Search Bar - Updated Design */}
-          <div className="search-section">
-            <div className="search-container">
-              <FontAwesomeIcon
-                icon={faSearch}
-                className="search-icon"
-                style={{ color: isFocused ? "#1890ff" : "#ccc" }}
-              />
-              <input
-                type="text"
-                value={search}
-                onChange={handleSearch}
-                placeholder="Rechercher par titre, description..."
-                className="search-bar-offer-list"
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-              />
-            </div>
+        <h1>Mes Offres</h1>
+
+        {/* Filtres + Recherche */}
+        <div className="filter-container">
+          <div className="filter-left">
+            {["all", "CDD", "CDI", "Stage"].map((type) => (
+              <button
+                key={type}
+                className={`filter-btn ${filterType === type.toLowerCase() ? "active" : ""}`}
+                onClick={() => handleFilterChange(type)}
+              >
+                {type}
+              </button>
+            ))}
           </div>
 
-          {/* Filter Section - Updated Design */}
-          <div className="filter-section">
-            <div className="results-count">
-              Affichage de {filteredOffers.length} offres
-            </div>
-            
-            <div className="filter-options">
-              <div className="filter-group">
-                <label className="filter-checkbox">
-                  <input 
-                    type="checkbox" 
-                    checked={filteredType === "cdi"}
-                    onChange={() => setFilteredType(filteredType === "cdi" ? null : "cdi")}
-                  />
-                  <span>CDI</span>
-                </label>
-                
-                <label className="filter-checkbox">
-                  <input 
-                    type="checkbox" 
-                    checked={filteredType === "cdd"}
-                    onChange={() => setFilteredType(filteredType === "cdd" ? null : "cdd")}
-                  />
-                  <span>CDD</span>
-                </label>
-                
-                <label className="filter-checkbox">
-                  <input 
-                    type="checkbox" 
-                    checked={filteredType === "stage"}
-                    onChange={() => setFilteredType(filteredType === "stage" ? null : "stage")}
-                  />
-                  <span>Stage</span>
-                </label>
-              </div>
-              
-              <div className="filter-group">
-                <label className="filter-checkbox">
-                  <input 
-                    type="checkbox" 
-                    checked={filteredDate === "recent"}
-                    onChange={() => setFilteredDate(filteredDate === "recent" ? null : "recent")}
-                  />
-                  <span>Récentes</span>
-                </label>
-                
-                <label className="filter-checkbox">
-                  <input 
-                    type="checkbox" 
-                    checked={filteredDate === "older"}
-                    onChange={() => setFilteredDate(filteredDate === "older" ? null : "older")}
-                  />
-                  <span>older</span>
-                </label>
-              </div>
-            </div>
+          <div className="sort-wrapper">
+            <div className="sort-label">Sort by</div>
+            <select className="sort-select" onChange={handleSort} value={sortOrder}>
+              <option value="recent">Most Recent</option>
+              <option value="older">Older</option>
+            </select>
           </div>
-
-          <Link to="/offres/new" className="create-offer-link">
-            ➕ Nouvelle offre
-          </Link>
         </div>
 
-        {loading ? (
-          <p>⏳ Chargement des offres...</p>
-        ) : error ? (
-          <p className="error-message">{error}</p>
-        ) : (
-          <table className="offers-table">
+        <div className="search-section">
+          <input
+            type="text"
+            value={search}
+            onChange={handleSearch}
+            placeholder="Search by job title or description"
+          />
+        </div>
+        <Link to="/offres/new" className="create-offer-link">
+            ➕ Nouvelle offre
+          </Link>
+        {/* Table des offres */}
+        <div className="offers-table">
+          <table>
             <thead>
               <tr>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Date</th>
+                <th>Title</th>
                 <th>Type</th>
+                <th>Date</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {filteredOffers.map((job) => (
                 <tr key={job._id}>
-                  <td>{job.title}</td>
-                  <td>{job.description.length > 50 ? job.description.substring(0, 50) + "..." : job.description}</td>
-                  <td>{formatDate(job.date_creation)}</td>
-                  <td>
-                    <Tag color={getBadgeColor(job.type_offre)}>{job.type_offre}</Tag>
-                  </td>
-                  <td>
-                    <FaEdit
-                      className="action-icon edit-icon"
-                      title="Modifier"
-                      onClick={() => handleUpdate(job._id)}
-                    />
-                    <FaTrash
-                      className="action-icon delete-icon"
-                      title="Supprimer"
-                      onClick={() => handleDelete(job._id)}
-                    />
-                  </td>
-                </tr>
+                <td>{job.title}</td>
+                <td>
+                  <span className={`badge ${getBadgeColor(job.type_offre)}`}>
+                    {job.type_offre}
+                  </span>
+                </td>
+                <td>{new Date(job.date_creation).toLocaleDateString()}</td>
+                <td>
+                  <span
+                    className="action-icon edit-icon"
+                    onClick={() => handleUpdate(job._id)}
+                  >
+                    <FaEdit />
+                  </span>
+                  <span
+                    className="action-icon delete-icon"
+                    onClick={() => handleDelete(job._id)}
+                  >
+                    <FaTrash />
+                  </span>
+                </td>
+              </tr>
               ))}
             </tbody>
           </table>
-        )}
+        </div>
+
+       
       </div>
     </>
   );

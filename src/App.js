@@ -30,6 +30,7 @@ import Offers from "./Pages/Offers";
 import TalentProfile from "./Pages/TalentProfile";
 import TalentOfferList from "./Pages/TalentOfferList";
 import DashboradTalent from "./Pages/DashboradTalent"
+import RecruiterOffersList from "./Pages/RecruiterOffersList";
 const { Sider, Content } = Layout;
 
 function App() {
@@ -82,6 +83,7 @@ function App() {
                 {/* Routes for Talent Application */}
                 <Route path="/TalentApplication" element={<TalentApplication />} />
                 <Route path="/recruiter-applications" element={<RecruiterApplications recruteurId={user.id} />} />
+                <Route path="/RecruiterOffersList" element={<RecruiterOffersList recruteurId={user.id} />} />
 
                 {/* Routes for managing offers */}
                 <Route path="/offres/new" element={<CreateOffre />} />

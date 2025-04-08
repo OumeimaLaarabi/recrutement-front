@@ -18,7 +18,9 @@ const OffreList = () => {
   const navigate = useNavigate();
 
   const handleOfferClick = (offerId) => {
-    if (!user) {
+    if (user) {
+      navigate(`/apply/:id`);
+    } else {
       navigate("/Login");
     }
   };
